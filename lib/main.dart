@@ -95,6 +95,9 @@ class _GameScreenState extends State<GameScreen> {
     int numRows = 5;
     tileGrid = List.generate(numRows, (i) =>
     List.generate(numRows, (j) => Tile(x: i, y: j, value: 0)));
+
+    tileGrid[1][2].value = 4;
+    tileGrid[3][2].value = 16;
   }
 
   @override
@@ -106,7 +109,6 @@ class _GameScreenState extends State<GameScreen> {
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 5; j++) {
         Tile tile = tileGrid[i][j];
-
 
         stackItems.add(
           Positioned(
