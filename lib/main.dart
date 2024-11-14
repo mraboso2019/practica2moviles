@@ -7,29 +7,17 @@ const Color softGreyPink = Color.fromARGB(255, 219, 112, 147);
 
 const Map<int, Color> numTileColor = {
   0: palePink,
-  // Para valor 0, color gris suave
   2: Color.fromARGB(255, 255, 192, 203),
-  // Rosa claro para valores bajos
   4: Color.fromARGB(255, 255, 182, 193),
-  // Otro tono rosado claro
   8: Color.fromARGB(255, 255, 174, 185),
-  // Rosado más saturado
   16: Color.fromARGB(255, 255, 160, 180),
-  // Rosado suave intermedio
   32: Color.fromARGB(255, 255, 130, 180),
-  // Rosado algo más fuerte
   64: Color.fromARGB(255, 255, 110, 160),
-  // Rosado fuerte pero aún suave
   128: Color.fromARGB(255, 240, 85, 140),
-  // Rosa con más saturación, pero no tan intenso
   256: Color.fromARGB(255, 220, 60, 120),
-  // Rosa algo más oscuro, manteniendo la suavidad
   512: Color.fromARGB(255, 200, 40, 100),
-  // Fucsia suave
   1024: Color.fromARGB(255, 180, 30, 90),
-  // Morado rosado más fuerte
   2048: Color.fromARGB(255, 160, 20, 80),
-  // Rosa chicle muy intenso, pero sin ser tan agresivo
 };
 
 void main() {
@@ -134,6 +122,33 @@ class _GameScreenState extends State<GameScreen> {
     tileGrid[4][0].value = 256;
   }
 
+  void swipeLeft() {
+    for (int i = 0; i < tileGrid.length; i++) {
+      List<Tile> row = tileGrid[i];
+
+      List<int> newRow = [];
+      for (var tile in row) {
+        if (tile.value != 0) {
+          newRow.add(tile.value);
+        }
+      }
+
+      while (newRow.length < row.length) {
+        newRow.add(0); // Añadimos ceros a la fila hasta completar el tamaño
+      }
+
+      for (int j = 0; j < row.length; j++) {
+        row[j].value = newRow[j];
+      }
+    }
+  }
+
+  void onSwipeLeft() {
+    setState(() {
+      swipeLeft();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double gridSize = MediaQuery.of(context).size.width - 16.0 * 2;
@@ -177,32 +192,52 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         title: Text('Partida en curso'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: gridSize,
-              height: tileSize,
-              decoration: BoxDecoration(
-                color: softGreyPink, // Color rosado
-                borderRadius: BorderRadius.circular(8.0),
-              ),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onHorizontalDragEnd: (details) {
+              if (details.primaryVelocity! < 0) {
+                // Si el swipe fue hacia la izquierda
+                onSwipeLeft();
+              }
+            },
+            child: Container(
+              width: double.infinity,
+              // Hacer que el Container ocupe todo el ancho
+              height: double.infinity,
+              // Hacer que el Container ocupe toda la altura
+              color: Colors
+                  .transparent, // Usamos transparente para que sea solo el detector
             ),
-            SizedBox(height: 10.0),
-            Container(
-              width: gridSize,
-              height: gridSize,
-              padding: EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: softGreyPink),
-              child: Stack(
-                children: stackItems,
-              ),
+          ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: gridSize,
+                  height: tileSize,
+                  decoration: BoxDecoration(
+                    color: softGreyPink, // Color rosado
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  width: gridSize,
+                  height: gridSize,
+                  padding: EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: softGreyPink),
+                  child: Stack(
+                    children: stackItems,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
