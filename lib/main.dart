@@ -7,17 +7,29 @@ const Color softGreyPink = Color.fromARGB(255, 219, 112, 147);
 
 const Map<int, Color> numTileColor = {
   0: palePink,
-  2: Color.fromARGB(255, 255, 192, 203), // Rosa claro para valores bajos
-  4: Color.fromARGB(255, 255, 182, 193), // Otro tono rosado claro
-  8: Color.fromARGB(255, 255, 174, 185), // Rosado más saturado
-  16: Color.fromARGB(255, 255, 140, 170), // Rosado intermedio
-  32: Color.fromARGB(255, 255, 105, 180), // Rosado fuerte
-  64: Color.fromARGB(255, 255, 20, 147), // Rosado intenso
-  128: Color.fromARGB(255, 219, 112, 147), // Rosa viejo
-  256: Color.fromARGB(255, 219, 82, 129), // Rosa más oscuro
-  512: Color.fromARGB(255, 199, 21, 133), // Fucsia fuerte
-  1024: Color.fromARGB(255, 186, 85, 211), // Morado rosado
-  2048: Color.fromARGB(255, 255, 0, 127), // Rosa chicle muy intenso
+  // Para valor 0, color gris suave
+  2: Color.fromARGB(255, 255, 192, 203),
+  // Rosa claro para valores bajos
+  4: Color.fromARGB(255, 255, 182, 193),
+  // Otro tono rosado claro
+  8: Color.fromARGB(255, 255, 174, 185),
+  // Rosado más saturado
+  16: Color.fromARGB(255, 255, 160, 180),
+  // Rosado suave intermedio
+  32: Color.fromARGB(255, 255, 130, 180),
+  // Rosado algo más fuerte
+  64: Color.fromARGB(255, 255, 110, 160),
+  // Rosado fuerte pero aún suave
+  128: Color.fromARGB(255, 240, 85, 140),
+  // Rosa con más saturación, pero no tan intenso
+  256: Color.fromARGB(255, 220, 60, 120),
+  // Rosa algo más oscuro, manteniendo la suavidad
+  512: Color.fromARGB(255, 200, 40, 100),
+  // Fucsia suave
+  1024: Color.fromARGB(255, 180, 30, 90),
+  // Morado rosado más fuerte
+  2048: Color.fromARGB(255, 160, 20, 80),
+  // Rosa chicle muy intenso, pero sin ser tan agresivo
 };
 
 void main() {
@@ -64,14 +76,34 @@ class MyHomePage extends StatelessWidget {
         title: Text('Pantalla de Inicio'),
       ),
       body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GameScreen()),
-              );
-            },
-            child: Text('Comenzar Partida')),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GameScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(MediaQuery.of(context).size.width / 3, 50),
+                ),
+                child: Text('Comenzar Partida')),
+            SizedBox(height: 10.0),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Options()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(MediaQuery.of(context).size.width / 3, 50),
+                ),
+                child: Text('Opciones')),
+          ],
+        ),
       ),
     );
   }
@@ -96,8 +128,10 @@ class _GameScreenState extends State<GameScreen> {
     tileGrid = List.generate(numRows,
         (i) => List.generate(numRows, (j) => Tile(x: i, y: j, value: 0)));
 
-    tileGrid[1][2].value = 4;
-    tileGrid[3][2].value = 16;
+    tileGrid[3][2].value = 4;
+    tileGrid[4][2].value = 16;
+    tileGrid[4][4].value = 64;
+    tileGrid[4][0].value = 256;
   }
 
   @override
@@ -128,10 +162,9 @@ class _GameScreenState extends State<GameScreen> {
                 child: Center(
                   child: Text(tile.value == 0 ? "" : tile.value.toString(),
                       style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white
-                      )),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white)),
                 ),
               ),
             ),
@@ -170,6 +203,20 @@ class _GameScreenState extends State<GameScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Options extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Opciones'),
+      ),
+      body: Center(
+        child: Placeholder(),
       ),
     );
   }
