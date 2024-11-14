@@ -5,6 +5,21 @@ const Color darkPink = Color.fromARGB(255, 255, 105, 180);
 const Color palePink = Color.fromARGB(255, 255, 228, 225);
 const Color softGreyPink = Color.fromARGB(255, 219, 112, 147);
 
+const Map<int, Color> numTileColor = {
+  0: palePink,
+  2: Color.fromARGB(255, 255, 192, 203),      // Rosa claro para valores bajos
+  4: Color.fromARGB(255, 255, 182, 193),      // Otro tono rosado claro
+  8: Color.fromARGB(255, 255, 174, 185),      // Rosado más saturado
+  16: Color.fromARGB(255, 255, 140, 170),     // Rosado intermedio
+  32: Color.fromARGB(255, 255, 105, 180),     // Rosado fuerte
+  64: Color.fromARGB(255, 255, 20, 147),      // Rosado intenso
+  128: Color.fromARGB(255, 219, 112, 147),    // Rosa viejo
+  256: Color.fromARGB(255, 219, 82, 129),     // Rosa más oscuro
+  512: Color.fromARGB(255, 199, 21, 133),     // Fucsia fuerte
+  1024: Color.fromARGB(255, 186, 85, 211),    // Morado rosado
+  2048: Color.fromARGB(255, 255, 0, 127),     // Rosa chicle muy intenso
+};
+
 void main() {
   runApp(MyApp());
 }
@@ -12,6 +27,10 @@ void main() {
 class Tile {
   final int x;
   final int y;
+
+  int value;
+
+  Tile({required this.x, required this.y, required this.value});
 }
 
 class MyApp extends StatelessWidget {
@@ -64,6 +83,20 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  List<List<Tile>> tileGrid = [];
+
+  @override
+  void initState(){
+    super.initState();
+    initializeGrid();
+  }
+
+  void initializeGrid(){
+    int numRows = 5;
+    tileGrid = List.generate(numRows, (i) =>
+    List.generate(numRows, (j) => Tile(x: i, y: j, value: 0)));
+  }
+
   @override
   Widget build(BuildContext context) {
     double gridSize = MediaQuery.of(context).size.width - 16.0 * 2;
@@ -72,6 +105,9 @@ class _GameScreenState extends State<GameScreen> {
 
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 5; j++) {
+        Tile tile = tileGrid[i][j];
+
+
         stackItems.add(
           Positioned(
             left: j * tileSize + 4.0,
@@ -84,30 +120,46 @@ class _GameScreenState extends State<GameScreen> {
             child: Center(
               child: Container(
                 decoration: BoxDecoration(
-                  color: palePink,
+                  color: numTileColor[tile.value],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
             ),
           ),
         );
-      }
-    }
+      }}
+
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Partida en curso'),
       ),
       body: Center(
-        child: Container(
-          width: gridSize,
-          height: gridSize,
-          padding: EdgeInsets.all(4.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0), color: softGreyPink),
-          child: Stack(
-            children: stackItems,
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: gridSize,
+              height: tileSize,
+              decoration: BoxDecoration(
+                color: softGreyPink, // Color rosado
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+
+            SizedBox(height: 10.0),
+
+            Container(
+              width: gridSize,
+              height: gridSize,
+              padding: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0), color: softGreyPink),
+              child: Stack(
+                children: stackItems,
+              ),
+            ),
+          ],
         ),
       ),
     );
