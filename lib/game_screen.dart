@@ -46,13 +46,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
     setState(() {
       bool placed = gameLogic.placeNumberInColumn(column);
       if (placed) {
-        // Actualizamos las posiciones en `tilePositions` para cada fila y columna de la cuadrícula
-        for (int row = gridSize - 1; row >= 0; row--) {
-          Tile tile = gameLogic.tileGrid[row][column];
-          if (tile.value != 0) {
-            tilePositions["$row-$column"] = row * tileSize + innerMargin * row;
-          }
-        }
+        applyGravity(); // Aplica la gravedad después de colocar la ficha
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Columna llena. Elige otra columna")),
@@ -74,13 +68,35 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
         if (targetTile.value == tile.value && tile.value != 0) {
           targetTile.value *= 2; // Combina las fichas
           tile.value = 0; // Borra el valor de la ficha original
+          applyGravity(); // Aplica gravedad después de cada combinación
         } else if (targetTile.value == 0) {
           // Mueve la ficha a la posición vacía
           targetTile.value = tile.value;
           tile.value = 0;
+          applyGravity(); // Aplica gravedad después de cada movimiento
         }
       });
     }
+  }
+
+  void applyGravity() {
+    for (int col = 0; col < gridSize; col++) {
+      // Recorre cada columna desde abajo hacia arriba
+      for (int row = gridSize - 1; row > 0; row--) {
+        if (gameLogic.tileGrid[row][col].value == 0) {
+          // Si encontramos un hueco vacío, movemos las fichas hacia abajo
+          for (int aboveRow = row - 1; aboveRow >= 0; aboveRow--) {
+            if (gameLogic.tileGrid[aboveRow][col].value != 0) {
+              gameLogic.tileGrid[row][col].value = gameLogic.tileGrid[aboveRow][col].value;
+              gameLogic.tileGrid[aboveRow][col].value = 0;
+              break;
+            }
+          }
+        }
+      }
+    }
+    // Llama a `setState` para actualizar la interfaz y aplicar la animación
+    setState(() {});
   }
 
   @override
@@ -123,7 +139,7 @@ class _GameScreenState extends State<GameScreen> with SingleTickerProviderStateM
             duration: Duration(milliseconds: 300), // Duración de la animación
             curve: Curves.easeOut, // Suavizado de la animación
             left: j * (tileSize + innerMargin),
-            top: finalTop,
+            top: i * (tileSize + innerMargin), // Posición actual de la ficha
             width: tileSize,
             height: tileSize,
             child: GestureDetector(
