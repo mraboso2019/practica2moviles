@@ -12,7 +12,11 @@ class DefeatScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Has perdido :('),
+              Text('Has perdido :(',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w500,
+                  )),
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
