@@ -3,7 +3,7 @@ import 'tile.dart';
 
 class GameLogic {
   List<List<Tile>> tileGrid = [];
-  int gridSize = 5;  // Tamaño de la cuadrícula (5x5)
+  int gridSize = 5; // Tamaño de la cuadrícula (5x5)
   int? nextNumber; // El próximo número a colocar
 
   GameLogic() {
@@ -15,9 +15,10 @@ class GameLogic {
     // Aseguramos que la cuadrícula sea de 5x5
     tileGrid = List.generate(
       gridSize,
-          (i) => List.generate(gridSize, (j) => Tile(x: i, y: j, value: 0)),
+      (i) => List.generate(gridSize, (j) => Tile(x: i, y: j, value: 0)),
     );
-    print("Grid initialized with dimensions: ${tileGrid.length}x${tileGrid[0].length}");
+    print(
+        "Grid initialized with dimensions: ${tileGrid.length}x${tileGrid[0].length}");
     printGrid(); // Imprimimos el estado inicial de la cuadrícula para verificar
   }
 
@@ -28,7 +29,8 @@ class GameLogic {
   }
 
   bool placeNumberInColumn(int column) {
-    if (nextNumber == null) return false; // Verifica que haya un número a colocar
+    if (nextNumber == null)
+      return false; // Verifica que haya un número a colocar
 
     // Empezamos desde la fila inferior y colocamos el número en la primera posición vacía
     for (int row = gridSize - 1; row >= 0; row--) {
