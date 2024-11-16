@@ -4,6 +4,7 @@ const Color lightPink = Color.fromARGB(255, 255, 182, 193);
 const Color darkPink = Color.fromARGB(255, 255, 105, 180);
 const Color palePink = Color.fromARGB(255, 255, 228, 225);
 const Color softGreyPink = Color.fromARGB(255, 219, 112, 147);
+const Color purplePink = Color(0xFF3D2C3B);
 
 const Map<int, Color> numTileColor = {
   0: palePink,                          // Para valor 0, color gris suave
@@ -26,7 +27,7 @@ final ThemeData appTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.white,
-      foregroundColor: softGreyPink,
+      foregroundColor: Colors.pink[900],
       textStyle: TextStyle(fontSize: 20),
     ),
   ),

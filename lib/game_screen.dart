@@ -15,7 +15,7 @@ class _GameScreenState extends State<GameScreen>
   final double outerMargin = 16.0; // Margen alrededor de la cuadrícula
   final double innerMargin = 5.0; // Espacio entre cada casilla
   Map<String, double> tilePositions =
-      {}; // Guardamos las posiciones de cada tile para animación
+  {}; // Guardamos las posiciones de cada tile para animación
   late double tileSize; // Moveremos el cálculo de `tileSize`
 
   @override
@@ -28,7 +28,10 @@ class _GameScreenState extends State<GameScreen>
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Cálculo seguro de `tileSize` en `didChangeDependencies` donde `MediaQuery` está disponible
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     double gridSizePx = screenWidth - 16.0 * 2;
     tileSize = (gridSizePx / 5) - 8;
 
@@ -106,8 +109,14 @@ class _GameScreenState extends State<GameScreen>
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double gridSizePx = MediaQuery.of(context).size.width - 16.0 * 2;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double gridSizePx = MediaQuery
+        .of(context)
+        .size
+        .width - 16.0 * 2;
     double tilePadding = 4.0;
     tileSize = (gridSizePx / 5) - tilePadding * 2;
 
@@ -197,9 +206,13 @@ class _GameScreenState extends State<GameScreen>
               child: Text(
                 gameLogic.nextNumber?.toString() ?? '',
                 style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: gameLogic.nextNumber != null &&
+                      gameLogic.nextNumber! <= 32
+                      ? Colors.pink[900] // Color si la condición es verdadera
+                      : Colors.white, // Color si la condición es falsa
+                ),
               ),
             ),
           ),
@@ -207,52 +220,79 @@ class _GameScreenState extends State<GameScreen>
       ],
     );
 
+    Widget showScore = Positioned(
+        top: 20,
+        left: 20,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+          child: Text(
+            'PUNTOS\n...',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.pink[900],
+            ),
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            color: palePink,
+          ),
+        ));
+
     return Scaffold(
       appBar: AppBar(title: Text('Partida en curso')),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min, // Centrar verticalmente
-          children: [
-            // Caja del próximo número
-            nextNumberDisplay,
-            SizedBox(height: 20.0),
-            // Caja de la cuadrícula
-            Container(
-              width: gridSizePx,
-              height: gridSizePx,
-              padding: EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                color: softGreyPink,
-              ),
-              child: Stack(children: stackItems),
-            ),
-            SizedBox(height: 20.0),
-            // Fila con flechas
-            Container(
-              width: gridSizePx,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(gridSize, (index) {
-                  return GestureDetector(
-                    onTap: () => onColumnTap(index),
-                    child: Container(
-                      width: tileSize,
-                      height: tileSize / 2,
-                      color: Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "↓",
-                          style: TextStyle(fontSize: 24, color: Colors.black),
+      body: Stack(
+        children: [
+          showScore,
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Centrar verticalmente
+              children: [
+                // Caja del próximo número
+                nextNumberDisplay,
+                SizedBox(height: 20.0),
+                // Caja de la cuadrícula
+                Container(
+                  width: gridSizePx,
+                  height: gridSizePx,
+                  padding: EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: softGreyPink,
+                  ),
+                  child: Stack(children: stackItems),
+                ),
+                SizedBox(height: 20.0),
+                // Fila con flechas
+                Container(
+                  width: gridSizePx,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: List.generate(gridSize, (index) {
+                      return GestureDetector(
+                        onTap: () => onColumnTap(index),
+                        child: Container(
+                          width: tileSize,
+                          height: tileSize / 1.5,
+                          color: Colors.transparent,
+                          child: Center(
+                            child: Text(
+                              "↓",
+                              style: TextStyle(
+                                  fontSize: 32,
+                                  color: purplePink,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
-              ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
