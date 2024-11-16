@@ -172,18 +172,20 @@ class _GameScreenState extends State<GameScreen>
 
     // Mostrar el próximo número en la parte superior
     Widget nextNumberDisplay = Stack(
+      alignment: Alignment.center,
       children: [
         Center(
           child: Container(
             width: gridSizePx,
-            height: tileSize,
+            height: tileSize + tilePadding * 4,
             decoration: BoxDecoration(
               color: palePink,
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
         ),
-        Center(
+        Align(
+          alignment: Alignment.center,
           child: Container(
             width: tileSize,
             height: tileSize,
@@ -227,24 +229,27 @@ class _GameScreenState extends State<GameScreen>
             ),
             SizedBox(height: 20.0),
             // Fila con flechas
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(gridSize, (index) {
-                return GestureDetector(
-                  onTap: () => onColumnTap(index),
-                  child: Container(
-                    width: tileSize,
-                    height: tileSize / 2,
-                    color: Colors.transparent,
-                    child: Center(
-                      child: Text(
-                        "↓",
-                        style: TextStyle(fontSize: 24, color: Colors.black),
+            Container(
+              width: gridSizePx,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(gridSize, (index) {
+                  return GestureDetector(
+                    onTap: () => onColumnTap(index),
+                    child: Container(
+                      width: tileSize,
+                      height: tileSize / 2,
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Text(
+                          "↓",
+                          style: TextStyle(fontSize: 24, color: Colors.black),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
           ],
         ),
