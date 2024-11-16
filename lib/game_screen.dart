@@ -211,41 +211,8 @@ class _GameScreenState extends State<GameScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min, // Centrar verticalmente
           children: [
-            SizedBox(height: 10.0),
             // Caja del próximo número
-            Stack(
-              children: [
-                Center(
-                  child: Container(
-                    width: gridSizePx,
-                    height: tileSize + 8.0,
-                    decoration: BoxDecoration(
-                      color: palePink,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    width: tileSize,
-                    height: tileSize,
-                    decoration: BoxDecoration(
-                      color: numTileColor[gameLogic.nextNumber],
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Center(
-                      child: Text(
-                        gameLogic.nextNumber?.toString() ?? '',
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            nextNumberDisplay,
             SizedBox(height: 20.0),
             // Caja de la cuadrícula
             Container(
