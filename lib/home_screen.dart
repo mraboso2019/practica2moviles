@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_2/defeat_screen.dart';
 import 'game_screen.dart';
 import 'options_screen.dart';
 
@@ -18,7 +19,10 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => GameScreen()),
                 );
               },
-              child: Text('Comenzar Partida'),
+              child: Text('Jugar'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+              ),
             ),
             SizedBox(height: 10.0),
             ElevatedButton(
@@ -29,6 +33,24 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: Text('Opciones'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+              ),
+            ),
+
+            //TEMPORAL
+            SizedBox(height: 10.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DefeatScreen()),
+                );
+              },
+              child: Text('Pantalla Derrota'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+              ),
             ),
           ],
         ),
