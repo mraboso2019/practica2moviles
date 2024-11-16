@@ -29,8 +29,10 @@ class _GameScreenState extends State<GameScreen>
     super.didChangeDependencies();
     // Cálculo seguro de `tileSize` en `didChangeDependencies` donde `MediaQuery` está disponible
     double screenWidth = MediaQuery.of(context).size.width;
-    double gridSizePx = screenWidth - 2 * outerMargin;
-    tileSize = (gridSizePx - (innerMargin * (gridSize - 1))) / gridSize;
+    double gridSizePx = screenWidth - 16.0 * 2;
+    tileSize = ((gridSizePx - 4.0 * 2) / gridSize - 4.0);
+
+    //tileSize = (gridSizePx - (innerMargin * (gridSize - 1))) / gridSize;
 
     initializeTilePositions(); // Inicializar posiciones de los tiles
   }
@@ -105,33 +107,12 @@ class _GameScreenState extends State<GameScreen>
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double gridSizePx = MediaQuery
-        .of(context)
-        .size
-        .width - 16.0 * 2;
+    double gridSizePx = MediaQuery.of(context).size.width - 16.0 * 2;
     double containerHeight = gridSizePx;
+    double offsetX = (gridSizePx - screenWidth) / 2; // Margen horizontal
+    double offsetY = offsetX; // Margen vertical (si el contenedor es cuadrado)
 
     List<Widget> stackItems = [];
-
-    // Fondo de la cuadrícula para mostrar las posiciones
-    for (int i = 0; i < gridSize; i++) {
-      for (int j = 0; j < gridSize; j++) {
-        stackItems.add(
-          Positioned(
-            left: j * (tileSize + innerMargin),
-            top: i * (tileSize + innerMargin),
-            width: tileSize,
-            height: tileSize,
-            child: Container(
-              decoration: BoxDecoration(
-                color: palePink, // Color suave para el fondo de la cuadrícula
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            ),
-          ),
-        );
-      }
-    }
 
     // Renderizar el tablero de números en 5x5 con animación de caída
     for (int i = 0; i < gridSize; i++) {
@@ -212,7 +193,9 @@ class _GameScreenState extends State<GameScreen>
               child: Text(
                 gameLogic.nextNumber?.toString() ?? '',
                 style: TextStyle(
-                    fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
           ),
@@ -222,40 +205,80 @@ class _GameScreenState extends State<GameScreen>
 
     return Scaffold(
       appBar: AppBar(title: Text('Partida en curso')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 10.0),
-          nextNumberDisplay, // Muestra el próximo número
-          SizedBox(height: 10.0),
-          Container(
-            width: gridSizePx,
-            height: gridSizePx,
-            padding: EdgeInsets.all(4.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              color: softGreyPink,
-            ),
-            child: Stack(children: stackItems),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(gridSize, (index) {
-              return GestureDetector(
-                onTap: () => onColumnTap(index),
-                child: Container(
-                  width: tileSize,
-                  height: tileSize / 2,
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Text("↓",
-                        style: TextStyle(fontSize: 24, color: Colors.black)),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min, // Centrar verticalmente
+          children: [
+            SizedBox(height: 10.0),
+            // Caja del próximo número
+            Stack(
+              children: [
+                Center(
+                  child: Container(
+                    width: gridSizePx,
+                    height: tileSize + 8.0,
+                    decoration: BoxDecoration(
+                      color: palePink,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                 ),
-              );
-            }),
-          ),
-        ],
+                Center(
+                  child: Container(
+                    width: tileSize,
+                    height: tileSize,
+                    decoration: BoxDecoration(
+                      color: numTileColor[gameLogic.nextNumber],
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        gameLogic.nextNumber?.toString() ?? '',
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.0),
+            // Caja de la cuadrícula
+            Container(
+              width: gridSizePx,
+              height: gridSizePx,
+              padding: EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                color: softGreyPink,
+              ),
+              child: Stack(children: stackItems),
+            ),
+            SizedBox(height: 20.0),
+            // Fila con flechas
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(gridSize, (index) {
+                return GestureDetector(
+                  onTap: () => onColumnTap(index),
+                  child: Container(
+                    width: tileSize,
+                    height: tileSize / 2,
+                    color: Colors.transparent,
+                    child: Center(
+                      child: Text(
+                        "↓",
+                        style: TextStyle(fontSize: 24, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
