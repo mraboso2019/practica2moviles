@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'tile.dart';
+import 'defeat_screen.dart';
 
 class GameLogic {
   List<List<Tile>> tileGrid = [];
@@ -43,9 +44,22 @@ class GameLogic {
       }
     }
 
+    isGridfull();
     // Si llega aquí, significa que la columna está llena
     print("Column $column is full. Could not place $nextNumber");
     return false;
+  }
+
+  bool isGridfull() {
+    for (int row = 0; row < gridSize; row++) {
+      for (int col = 0; col < gridSize; col++) {
+        if (tileGrid[row][col].value == 0) {
+          return false; // Si hay al menos una casilla vacía, no está llena
+        }
+      }
+    }
+    return true;
+    return true;
   }
 
   void swipeLeft() {

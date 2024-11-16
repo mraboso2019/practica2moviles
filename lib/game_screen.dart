@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'tile.dart';
 import 'game_logic.dart';
-
+import 'defeat_screen.dart'
+;
 class GameScreen extends StatefulWidget {
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -57,6 +58,12 @@ class _GameScreenState extends State<GameScreen>
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Columna llena. Elige otra columna")),
+        );
+      }
+      if (gameLogic.isGridfull()){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DefeatScreen()),
         );
       }
     });
@@ -219,6 +226,7 @@ class _GameScreenState extends State<GameScreen>
         ),
       ],
     );
+
 
     Widget showScore = Positioned(
         top: 20,
