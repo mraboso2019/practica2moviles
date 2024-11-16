@@ -177,7 +177,10 @@ class _GameScreenState extends State<GameScreen>
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: tile.value != null &&
+                              tile.value! <= 16
+                              ? Colors.pink[900] // Color si la condición es verdadera
+                              : Colors.white,),
                     ),
                   ),
                 ),
