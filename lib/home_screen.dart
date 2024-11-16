@@ -38,21 +38,6 @@ class HomeScreen extends StatelessWidget {
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),
             ),
-
-            //TEMPORAL
-            SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DefeatScreen()),
-                );
-              },
-              child: Text('Pantalla Derrota'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
-              ),
-            ),
           ],
         ),
       ),
