@@ -209,7 +209,7 @@ class _GameScreenState extends State<GameScreen>
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: gameLogic.nextNumber != null &&
-                      gameLogic.nextNumber! <= 32
+                      gameLogic.nextNumber! <= 16
                       ? Colors.pink[900] // Color si la condición es verdadera
                       : Colors.white, // Color si la condición es falsa
                 ),
@@ -280,7 +280,7 @@ class _GameScreenState extends State<GameScreen>
                               "↓",
                               style: TextStyle(
                                   fontSize: 32,
-                                  color: purplePink,
+                                  color: Colors.pink[900],
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
