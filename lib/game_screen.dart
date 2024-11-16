@@ -13,7 +13,7 @@ class _GameScreenState extends State<GameScreen>
   late GameLogic gameLogic;
   final int gridSize = 5; // Tamaño de la cuadrícula de 5x5
   final double outerMargin = 16.0; // Margen alrededor de la cuadrícula
-  final double innerMargin = 4.0; // Espacio entre cada casilla
+  final double innerMargin = 5.0; // Espacio entre cada casilla
   Map<String, double> tilePositions =
       {}; // Guardamos las posiciones de cada tile para animación
   late double tileSize; // Moveremos el cálculo de `tileSize`
@@ -30,7 +30,7 @@ class _GameScreenState extends State<GameScreen>
     // Cálculo seguro de `tileSize` en `didChangeDependencies` donde `MediaQuery` está disponible
     double screenWidth = MediaQuery.of(context).size.width;
     double gridSizePx = screenWidth - 16.0 * 2;
-    tileSize = ((gridSizePx - 4.0 * 2) / gridSize - 4.0);
+    tileSize = (gridSizePx / 5) - 8;
 
     //tileSize = (gridSizePx - (innerMargin * (gridSize - 1))) / gridSize;
 
@@ -108,9 +108,8 @@ class _GameScreenState extends State<GameScreen>
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double gridSizePx = MediaQuery.of(context).size.width - 16.0 * 2;
-    double containerHeight = gridSizePx;
-    double offsetX = (gridSizePx - screenWidth) / 2; // Margen horizontal
-    double offsetY = offsetX; // Margen vertical (si el contenedor es cuadrado)
+    double tilePadding = 4.0;
+    tileSize = (gridSizePx / 5) - tilePadding * 2;
 
     List<Widget> stackItems = [];
 
@@ -128,8 +127,8 @@ class _GameScreenState extends State<GameScreen>
               // Duración de la animación
               curve: Curves.easeOut,
               // Suavizado de la animación
-              left: j * (tileSize + innerMargin),
-              top: i * (tileSize + innerMargin),
+              left: j * (tileSize + tilePadding * 2),
+              top: i * (tileSize + tilePadding * 2),
               // Posición actual de la ficha
               width: tileSize,
               height: tileSize,
@@ -149,8 +148,11 @@ class _GameScreenState extends State<GameScreen>
                   }
                 },
                 child: Container(
+                  width: tileSize - 8,
+                  height: tileSize - 8,
                   decoration: BoxDecoration(
                     color: numTileColor[tile.value] ?? Colors.grey,
+                    //color: Colors.grey,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Center(
