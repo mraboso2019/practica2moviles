@@ -6,6 +6,7 @@ class GameLogic {
   List<List<Tile>> tileGrid = [];
   int gridSize = 5; // Tamaño de la cuadrícula (5x5)
   int? nextNumber; // El próximo número a colocar
+  int score = 0;
 
   GameLogic() {
     initializeGrid();
@@ -24,7 +25,7 @@ class GameLogic {
   }
 
   void generateNextNumber() {
-    List<int> possibleNumbers = [2, 4, 8, 16, 32, 64, 128, 256];
+    List<int> possibleNumbers = [2, 4, 8];
     nextNumber = possibleNumbers[Random().nextInt(possibleNumbers.length)];
     print("Generated next number: $nextNumber");
   }

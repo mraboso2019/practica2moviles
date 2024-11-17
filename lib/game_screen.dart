@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'tile.dart';
 import 'game_logic.dart';
-import 'defeat_screen.dart'
-;
+import 'defeat_screen.dart';
+
 class GameScreen extends StatefulWidget {
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -16,7 +16,7 @@ class _GameScreenState extends State<GameScreen>
   final double outerMargin = 16.0; // Margen alrededor de la cuadrícula
   final double innerMargin = 5.0; // Espacio entre cada casilla
   Map<String, double> tilePositions =
-  {}; // Guardamos las posiciones de cada tile para animación
+      {}; // Guardamos las posiciones de cada tile para animación
   late double tileSize; // Moveremos el cálculo de `tileSize`
 
   @override
@@ -29,10 +29,7 @@ class _GameScreenState extends State<GameScreen>
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Cálculo seguro de `tileSize` en `didChangeDependencies` donde `MediaQuery` está disponible
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double screenWidth = MediaQuery.of(context).size.width;
     double gridSizePx = screenWidth - 16.0 * 2;
     tileSize = (gridSizePx / 5) - 8;
 
@@ -60,7 +57,7 @@ class _GameScreenState extends State<GameScreen>
           SnackBar(content: Text("Columna llena. Elige otra columna")),
         );
       }
-      if (gameLogic.isGridfull()){
+      if (gameLogic.isGridfull()) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DefeatScreen()),
@@ -116,16 +113,10 @@ class _GameScreenState extends State<GameScreen>
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double gridSizePx = MediaQuery
-        .of(context)
-        .size
-        .width - 16.0 * 2;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double gridSizePx = MediaQuery.of(context).size.width - 16.0 * 2;
     double tilePadding = 4.0;
-    tileSize = (gridSizePx / 5) - tilePadding * 2;
+    tileSize = ((gridSizePx - (tilePadding * 5) - 30) / 5);
 
     List<Widget> stackItems = [];
 
@@ -139,12 +130,11 @@ class _GameScreenState extends State<GameScreen>
 
         stackItems.add(
           AnimatedPositioned(
-              duration: Duration(milliseconds: 300),
               // Duración de la animación
+              duration: Duration(milliseconds: 300),
               curve: Curves.easeOut,
-              // Suavizado de la animación
-              left: j * (tileSize + tilePadding * 2),
-              top: i * (tileSize + tilePadding * 2),
+              left: j * (tileSize + tilePadding * 2) + tilePadding,
+              top: i * (tileSize + tilePadding * 2) + tilePadding,
               // Posición actual de la ficha
               width: tileSize,
               height: tileSize,
@@ -175,12 +165,13 @@ class _GameScreenState extends State<GameScreen>
                     child: Text(
                       tile.value == 0 ? "" : tile.value.toString(),
                       style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: tile.value != null &&
-                              tile.value! <= 16
-                              ? Colors.pink[900] // Color si la condición es verdadera
-                              : Colors.white,),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: tile.value != null && tile.value! <= 16
+                            ? Colors
+                                .pink[900] // Color si la condición es verdadera
+                            : Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -219,7 +210,7 @@ class _GameScreenState extends State<GameScreen>
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: gameLogic.nextNumber != null &&
-                      gameLogic.nextNumber! <= 16
+                          gameLogic.nextNumber! <= 16
                       ? Colors.pink[900] // Color si la condición es verdadera
                       : Colors.white, // Color si la condición es falsa
                 ),
@@ -229,7 +220,6 @@ class _GameScreenState extends State<GameScreen>
         ),
       ],
     );
-
 
     Widget showScore = Positioned(
         top: 20,
