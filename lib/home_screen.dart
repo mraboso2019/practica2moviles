@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => GameScreen()),
                 );
               },
-              child: Text('Jugar'),
+              child: Text('JUGAR'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => OptionsScreen()),
                 );
               },
-              child: Text('Opciones'),
+              child: Text('OPCIONES'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),

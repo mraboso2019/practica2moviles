@@ -6,7 +6,6 @@ class GameLogic {
   List<List<Tile>> tileGrid = [];
   int gridSize = 5; // Tamaño de la cuadrícula (5x5)
   int? nextNumber; // El próximo número a colocar
-  int score = 0;
 
   GameLogic() {
     initializeGrid();

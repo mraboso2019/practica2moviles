@@ -12,6 +12,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen>
     with SingleTickerProviderStateMixin {
   late GameLogic gameLogic;
+  int score = 0;
   final int gridSize = 5; // Tamaño de la cuadrícula de 5x5
   final double outerMargin = 16.0; // Margen alrededor de la cuadrícula
   final double innerMargin = 5.0; // Espacio entre cada casilla
@@ -77,7 +78,8 @@ class _GameScreenState extends State<GameScreen>
       setState(() {
         // Verifica si la ficha adyacente tiene el mismo valor para combinarla
         if (targetTile.value == tile.value && tile.value != 0) {
-          targetTile.value *= 2; // Combina las fichas
+          targetTile.value *= 2;
+          score += targetTile.value;// Combina las fichas
           tile.value = 0; // Borra el valor de la ficha original
           applyGravity(); // Aplica gravedad después de cada combinación
         } else if (targetTile.value == 0) {
@@ -227,11 +229,11 @@ class _GameScreenState extends State<GameScreen>
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
           child: Text(
-            'PUNTOS\n...',
+            'PUNTOS\n$score',
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w500,
-              color: Colors.pink[900],
             ),
           ),
           decoration: BoxDecoration(

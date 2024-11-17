@@ -24,6 +24,11 @@ const Map<int, Color> numTileColor = {
 final ThemeData appTheme = ThemeData(
   primarySwatch: Colors.pink,
   scaffoldBackgroundColor: lightPink,
+  textTheme: TextTheme(
+    bodyLarge: TextStyle(color: Colors.pink[900]),
+    bodyMedium: TextStyle(color: Colors.pink[900]),
+    bodySmall: TextStyle(color: Colors.pink[900]),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.white,

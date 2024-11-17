@@ -6,7 +6,7 @@ class DefeatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Opciones')),
+      appBar: AppBar(title: Text('Pantalla Derrota')),
       body: Center(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +28,7 @@ class DefeatScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
                 ),
-                child: Text('Menú'),
+                child: Text('MENÚ'),
               ),
               SizedBox(height: 10.0),
               ElevatedButton(
@@ -41,7 +41,7 @@ class DefeatScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
                 ),
-                child: Text('Nueva Partida'),
+                child: Text('NUEVA PARTIDA'),
               ),
             ]),
       ),
