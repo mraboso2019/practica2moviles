@@ -91,23 +91,6 @@ class GameLogic {
     return true;
   }
 
-  void swipeLeft() {
-    for (int i = 0; i < gridSize; i++) {
-      List<Tile> row = tileGrid[i];
-      List<int> newRow = [];
-
-      for (var tile in row) {
-        if (tile.value != 0) newRow.add(tile.value);
-      }
-
-      for (int j = 0; j < gridSize; j++) {
-        row[j].value = (j < newRow.length) ? newRow[j] : 0;
-      }
-    }
-    print("Swiped left");
-    printGrid(); // Imprimimos el estado de la cuadrícula después de cada swipe
-  }
-
   // Función para imprimir el estado actual de la cuadrícula (para depuración)
   void printGrid() {
     for (var row in tileGrid) {

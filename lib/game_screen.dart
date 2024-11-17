@@ -67,51 +67,76 @@ class _GameScreenState extends State<GameScreen>
     });
   }
 
-  void onSwipe(Tile tile, int dx, int dy) {
-    int newX = tile.x + dx;
-    int newY = tile.y + dy;
-
-    // Verifica que la nueva posición esté dentro de los límites de la cuadrícula
-    if (newX >= 0 && newX < gridSize && newY >= 0 && newY < gridSize) {
-      Tile targetTile = gameLogic.tileGrid[newX][newY];
-
-      setState(() {
-        // Verifica si la ficha adyacente tiene el mismo valor para combinarla
-        if (targetTile.value == tile.value && tile.value != 0) {
-          targetTile.value *= 2;
-          score += targetTile.value;// Combina las fichas
-          tile.value = 0; // Borra el valor de la ficha original
-          applyGravity(); // Aplica gravedad después de cada combinación
-        } else if (targetTile.value == 0) {
-          // Mueve la ficha a la posición vacía
-          targetTile.value = tile.value;
-          tile.value = 0;
-          applyGravity(); // Aplica gravedad después de cada movimiento
+  void onSwipe(String direction) {
+    setState(() {
+      if (direction == "left") {
+        // Movimiento hacia la izquierda
+        for (int i = 0; i < gridSize; i++) {
+          moveAndCombine(gameLogic.tileGrid[i]);
         }
-      });
+      } else if (direction == "right") {
+        // Movimiento hacia la derecha
+        for (int i = 0; i < gridSize; i++) {
+          List<Tile> reversedRow = gameLogic.tileGrid[i].reversed.toList();
+          moveAndCombine(reversedRow);
+          gameLogic.tileGrid[i] = reversedRow.reversed.toList();
+        }
+      }
+      applyGravity(); // Aplicamos gravedad después del swipe
+    });
+  }
+
+  void moveAndCombine(List<Tile> line) {
+    int targetIndex = 0;
+    for (int currentIndex = 0; currentIndex < gridSize; currentIndex++) {
+      Tile currentTile = line[currentIndex];
+      if (currentTile.value == 0) continue;
+
+      if (targetIndex > 0 && line[targetIndex - 1].value == currentTile.value) {
+        line[targetIndex - 1].value *= 2;
+        currentTile.value = 0;
+      } else {
+        if (targetIndex != currentIndex) {
+          line[targetIndex].value = currentTile.value;
+          currentTile.value = 0;
+        }
+        targetIndex++;
+      }
     }
   }
 
   void applyGravity() {
     for (int col = 0; col < gridSize; col++) {
-      // Recorre cada columna desde abajo hacia arriba
-      for (int row = gridSize - 1; row > 0; row--) {
-        if (gameLogic.tileGrid[row][col].value == 0) {
-          // Si encontramos un hueco vacío, movemos las fichas hacia abajo
-          for (int aboveRow = row - 1; aboveRow >= 0; aboveRow--) {
-            if (gameLogic.tileGrid[aboveRow][col].value != 0) {
-              gameLogic.tileGrid[row][col].value =
-                  gameLogic.tileGrid[aboveRow][col].value;
-              gameLogic.tileGrid[aboveRow][col].value = 0;
-              break;
+      bool didCombine; // Indicador para repetir la columna si se produjo una combinación
+      do {
+        didCombine = false;
+        for (int row = gridSize - 1; row > 0; row--) {
+          if (gameLogic.tileGrid[row][col].value == 0) {
+            // Si encontramos un espacio vacío, movemos la ficha hacia abajo
+            for (int aboveRow = row - 1; aboveRow >= 0; aboveRow--) {
+              if (gameLogic.tileGrid[aboveRow][col].value != 0) {
+                gameLogic.tileGrid[row][col].value =
+                    gameLogic.tileGrid[aboveRow][col].value;
+                gameLogic.tileGrid[aboveRow][col].value = 0;
+                break;
+              }
             }
           }
+          // Verificar si podemos combinar
+          if (row > 0 &&
+              gameLogic.tileGrid[row][col].value ==
+                  gameLogic.tileGrid[row - 1][col].value &&
+              gameLogic.tileGrid[row][col].value != 0) {
+            gameLogic.tileGrid[row][col].value *= 2;
+            gameLogic.tileGrid[row - 1][col].value = 0;
+            didCombine = true; // Marcamos que hubo una combinación
+          }
         }
-      }
+      } while (didCombine); // Repetimos mientras se sigan produciendo combinaciones
     }
-    // Llama a `setState` para actualizar la interfaz y aplicar la animación
-    setState(() {});
+    setState(() {}); // Actualizamos la interfaz para reflejar los cambios
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,16 +168,9 @@ class _GameScreenState extends State<GameScreen>
               child: GestureDetector(
                 onHorizontalDragUpdate: (details) {
                   if (details.delta.dx > 0) {
-                    onSwipe(tile, 0, 1); // Swipe a la derecha
+                    onSwipe("right"); // Swipe a la derecha
                   } else if (details.delta.dx < 0) {
-                    onSwipe(tile, 0, -1); // Swipe a la izquierda
-                  }
-                },
-                onVerticalDragUpdate: (details) {
-                  if (details.delta.dy > 0) {
-                    onSwipe(tile, 1, 0); // Swipe hacia abajo
-                  } else if (details.delta.dy < 0) {
-                    onSwipe(tile, -1, 0); // Swipe hacia arriba
+                    onSwipe("left"); // Swipe a la izquierda
                   }
                 },
                 child: Container(
