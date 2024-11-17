@@ -13,6 +13,7 @@ class _GameScreenState extends State<GameScreen>
     with SingleTickerProviderStateMixin {
   late GameLogic gameLogic;
   int score = 0;
+  int moves = 0;
   final int gridSize = 5; // Tamaño de la cuadrícula de 5x5
   final double outerMargin = 16.0; // Margen alrededor de la cuadrícula
   final double innerMargin = 5.0; // Espacio entre cada casilla
@@ -107,7 +108,8 @@ class _GameScreenState extends State<GameScreen>
 
   void applyGravity() {
     for (int col = 0; col < gridSize; col++) {
-      bool didCombine; // Indicador para repetir la columna si se produjo una combinación
+      bool
+          didCombine; // Indicador para repetir la columna si se produjo una combinación
       do {
         didCombine = false;
         for (int row = gridSize - 1; row > 0; row--) {
@@ -132,11 +134,11 @@ class _GameScreenState extends State<GameScreen>
             didCombine = true; // Marcamos que hubo una combinación
           }
         }
-      } while (didCombine); // Repetimos mientras se sigan produciendo combinaciones
+      } while (
+          didCombine); // Repetimos mientras se sigan produciendo combinaciones
     }
     setState(() {}); // Actualizamos la interfaz para reflejar los cambios
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -241,34 +243,67 @@ class _GameScreenState extends State<GameScreen>
       ],
     );
 
-    Widget showScore = Positioned(
-        top: 20,
-        left: 20,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-          child: Text(
-            'PUNTOS\n$score',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            color: palePink,
-          ),
-        ));
+    Widget showScore = Container(
+      width: MediaQuery.of(context).size.width / 2.5,
+      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      child: Text(
+        'PUNTOS\n$score',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: palePink,
+      ),
+    );
+
+    Widget showMoves = Container(
+      width: MediaQuery.of(context).size.width / 2.5,
+      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      child: Text(
+        'MOVIMIENTOS\n$moves',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: palePink,
+      ),
+    );
 
     return Scaffold(
-      appBar: AppBar(title: Text('Partida en curso')),
+      //appBar: AppBar(title: Text('Partida en curso')),
       body: Stack(
         children: [
-          showScore,
+          //showScore,
+          //showMoves,
+
+          Padding(
+            padding: EdgeInsets.only( top: MediaQuery.of(context).size.height / 12),
+            //padding: EdgeInsets.only(top: 60),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(height: 10),
+                showScore,
+                showMoves,
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min, // Centrar verticalmente
               children: [
+
+
                 // Caja del próximo número
                 nextNumberDisplay,
                 SizedBox(height: 20.0),
