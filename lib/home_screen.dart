@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => GameScreen()),
                 );
               },
-              child: Text('JUGAR'),
+              child: Text('START'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),
@@ -33,7 +33,21 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => OptionsScreen()),
                 );
               },
-              child: Text('OPCIONES'),
+              child: Text('OPTIONS'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+              ),
+            ),
+            SizedBox(height: 10.0),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OptionsScreen()),
+                );
+              },
+              child: Text('HOW TO PLAY'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),

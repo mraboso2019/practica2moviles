@@ -12,7 +12,7 @@ class DefeatScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Has perdido :(',
+              Text('You lost :(',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w500,
@@ -28,7 +28,7 @@ class DefeatScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
                 ),
-                child: Text('MENÚ'),
+                child: Text('MENU'),
               ),
               SizedBox(height: 10.0),
               ElevatedButton(
@@ -41,7 +41,7 @@ class DefeatScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
                 ),
-                child: Text('NUEVA PARTIDA'),
+                child: Text('NEW GAME'),
               ),
             ]),
       ),

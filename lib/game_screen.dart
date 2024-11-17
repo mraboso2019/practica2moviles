@@ -3,6 +3,7 @@ import 'app_theme.dart';
 import 'tile.dart';
 import 'game_logic.dart';
 import 'defeat_screen.dart';
+import 'options_screen.dart';
 
 class GameScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _GameScreenState extends State<GameScreen>
   int score = 0;
   int moves = 0;
   final int gridSize = 5; // Tamaño de la cuadrícula de 5x5
-  final double outerMargin = 16.0; // Margen alrededor de la cuadrícula
+  final double outerPadding = 16.0; // Margen alrededor de la cuadrícula
   final double innerMargin = 5.0; // Espacio entre cada casilla
   Map<String, double> tilePositions =
       {}; // Guardamos las posiciones de cada tile para animación
@@ -143,7 +144,7 @@ class _GameScreenState extends State<GameScreen>
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double gridSizePx = MediaQuery.of(context).size.width - outerMargin * 2;
+    double gridSizePx = MediaQuery.of(context).size.width - outerPadding * 2;
     double tilePadding = 4.0;
     tileSize = ((gridSizePx - (tilePadding * 5) - 28) / 5);
 
@@ -244,56 +245,98 @@ class _GameScreenState extends State<GameScreen>
     );
 
     Widget showScore = Container(
-      width: MediaQuery.of(context).size.width / 2.5,
+      width: MediaQuery.of(context).size.width / 5,
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      child: Text(
-        'PUNTOS\n$score',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         color: palePink,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min, // Ajusta el tamaño al contenido
+        children: [
+          Text(
+            'SCORE',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15, // Tamaño de letra más pequeño
+              fontWeight: FontWeight.w400, // Peso de fuente más ligero
+            ),
+          ),
+          SizedBox(height: 4), // Separación entre los textos
+          Text(
+            '$score',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20, // Tamaño de letra más grande
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
 
     Widget showMoves = Container(
-      width: MediaQuery.of(context).size.width / 2.5,
+      width: MediaQuery.of(context).size.width / 5,
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      child: Text(
-        'MOVIMIENTOS\n$moves',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         color: palePink,
       ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min, // Ajusta el tamaño al contenido
+        children: [
+          Text(
+            'MOVES',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15, // Tamaño de letra más pequeño
+              fontWeight: FontWeight.w400, // Peso de fuente más ligero
+            ),
+          ),
+          SizedBox(height: 4), // Separación entre los textos
+          Text(
+            '$moves',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20, // Tamaño de letra más grande
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    Widget options = ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OptionsScreen()),
+        );
+      },
+      child: Icon(Icons.menu_rounded),
     );
 
     return Scaffold(
       //appBar: AppBar(title: Text('Partida en curso')),
       body: Stack(
         children: [
+          Positioned(
+              top: MediaQuery.of(context).size.height / 12,
+              left: outerPadding,
+              child: options),
           //showScore,
           //showMoves,
-
           Padding(
-            padding: EdgeInsets.only( top: MediaQuery.of(context).size.height / 12),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height / 12),
             //padding: EdgeInsets.only(top: 60),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(height: 10),
                 showScore,
+                SizedBox(width: 20.0),
                 showMoves,
-                SizedBox(height: 10),
+                SizedBox(width: outerPadding),
               ],
             ),
           ),
@@ -302,8 +345,6 @@ class _GameScreenState extends State<GameScreen>
             child: Column(
               mainAxisSize: MainAxisSize.min, // Centrar verticalmente
               children: [
-
-
                 // Caja del próximo número
                 nextNumberDisplay,
                 SizedBox(height: 20.0),
@@ -332,12 +373,11 @@ class _GameScreenState extends State<GameScreen>
                           height: tileSize / 1.5,
                           color: Colors.transparent,
                           child: Center(
-                            child: Text(
-                              "↓",
-                              style: TextStyle(
-                                  fontSize: 32,
-                                  color: Colors.pink[900],
-                                  fontWeight: FontWeight.w500),
+                            child:
+                            Icon(
+                              Icons.arrow_downward_rounded,
+                              size: 32, // Tamaño del ícono
+                              color: Colors.pink[900], // Color del ícono
                             ),
                           ),
                         ),

@@ -19,6 +19,8 @@ const Map<int, Color> numTileColor = {
   512: Color.fromARGB(255, 200, 40, 100),
   1024: Color.fromARGB(255, 180, 30, 90),
   2048: Color.fromARGB(255, 160, 20, 80),
+  4096: Color.fromARGB(255, 140, 10, 70),
+  8192: Color.fromARGB(255, 120, 5, 60),
 };
 
 final ThemeData appTheme = ThemeData(
@@ -34,6 +36,9 @@ final ThemeData appTheme = ThemeData(
       backgroundColor: Colors.white,
       foregroundColor: Colors.pink[900],
       textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0), // Establece a cero para bordes cuadrados
+      ),
     ),
   ),
 );
