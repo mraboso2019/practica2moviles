@@ -190,7 +190,7 @@ class _GameScreenState extends State<GameScreen>
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: tile.value != null && tile.value! <= 16
+                        color: tile.value != null && tile.value! <= 32
                             ? Colors
                                 .pink[900] // Color si la condición es verdadera
                             : Colors.white,
@@ -212,7 +212,7 @@ class _GameScreenState extends State<GameScreen>
             width: gridSizePx,
             height: tileSize + tilePadding * 4,
             decoration: BoxDecoration(
-              color: palePink,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
@@ -233,7 +233,7 @@ class _GameScreenState extends State<GameScreen>
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: gameLogic.nextNumber != null &&
-                          gameLogic.nextNumber! <= 16
+                          gameLogic.nextNumber! <= 32
                       ? Colors.pink[900] // Color si la condición es verdadera
                       : Colors.white, // Color si la condición es falsa
                 ),
@@ -249,7 +249,7 @@ class _GameScreenState extends State<GameScreen>
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: palePink,
+        color: Colors.white,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min, // Ajusta el tamaño al contenido
@@ -280,7 +280,7 @@ class _GameScreenState extends State<GameScreen>
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: palePink,
+        color: Colors.white,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min, // Ajusta el tamaño al contenido
@@ -373,9 +373,9 @@ class _GameScreenState extends State<GameScreen>
                           height: tileSize / 1.5,
                           color: Colors.transparent,
                           child: Center(
-                            child:
-                            Icon(
-                              Icons.arrow_downward_rounded,
+                            child: Icon(
+                              //Icons.arrow_downward_rounded,
+                              Icons.keyboard_double_arrow_down_rounded,
                               size: 32, // Tamaño del ícono
                               color: Colors.pink[900], // Color del ícono
                             ),

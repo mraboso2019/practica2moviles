@@ -13,10 +13,7 @@ class HowToPlay extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
-              );
+              Navigator.pop(context);
             },
             child: Text('BACK'),
             style: ElevatedButton.styleFrom(

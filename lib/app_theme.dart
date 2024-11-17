@@ -7,8 +7,9 @@ const Color softGreyPink = Color.fromARGB(255, 219, 112, 147);
 const Color purplePink = Color(0xFF3D2C3B);
 
 const Map<int, Color> numTileColor = {
-  0: palePink,
-  2: Color.fromARGB(255, 255, 192, 203),
+  0: Colors.white,
+  //2: Color.fromARGB(255, 255, 192, 203),
+  2:palePink,
   4: Color.fromARGB(255, 255, 182, 193),
   8: Color.fromARGB(255, 255, 174, 185),
   16: Color.fromARGB(255, 255, 160, 180),
