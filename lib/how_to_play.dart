@@ -7,16 +7,22 @@ class HowToPlay extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: EdgeInsets.all(20.0), // Ajusta el valor para el espacio alrededor de los textos
+            padding: EdgeInsets.all(24.0),
+            // Ajusta el valor para el espacio alrededor de los textos
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white,
+                  ),
                   child: Text(
                     'HOW TO PLAY',
                     textAlign: TextAlign.center,
@@ -26,7 +32,7 @@ class HowToPlay extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10), // Espacio entre los textos
+                SizedBox(height: 20), // Espacio entre los textos
 
                 Text(
                   'Choose the column where you want the number on the screen to fall by tapping on the arrows below the grid',
@@ -35,7 +41,6 @@ class HowToPlay extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
-
                 ),
                 SizedBox(height: 10), // Espacio entre los textos
                 Row(
@@ -54,12 +59,10 @@ class HowToPlay extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
-
                 ),
               ],
             ),
           ),
-
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {

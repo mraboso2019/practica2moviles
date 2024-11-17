@@ -376,8 +376,6 @@ class _GameScreenState extends State<GameScreen>
                             child: Icon(
                               //Icons.arrow_downward_rounded,
                               Icons.keyboard_double_arrow_down_rounded,
-                              size: 32, // Tamaño del ícono
-                              color: Colors.pink[900], // Color del ícono
                             ),
                           ),
                         ),

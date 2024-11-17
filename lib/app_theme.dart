@@ -42,4 +42,8 @@ final ThemeData appTheme = ThemeData(
       ),
     ),
   ),
+  iconTheme: IconThemeData(
+    color: Colors.pink[900], // Cambia el color de los iconos globalmente
+    size: 32, // Puedes cambiar el tamaño de los iconos aquí
+  ),
 );
