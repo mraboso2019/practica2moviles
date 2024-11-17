@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica_2/defeat_screen.dart';
+import 'package:practica_2/how_to_play.dart';
 import 'game_screen.dart';
 import 'options_screen.dart';
 
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OptionsScreen()),
+                  MaterialPageRoute(builder: (context) => HowToPlay()),
                 );
               },
               child: Text('HOW TO PLAY'),
