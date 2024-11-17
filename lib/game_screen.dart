@@ -116,9 +116,9 @@ class _GameScreenState extends State<GameScreen>
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double gridSizePx = MediaQuery.of(context).size.width - 16.0 * 2;
+    double gridSizePx = MediaQuery.of(context).size.width - outerMargin * 2;
     double tilePadding = 4.0;
-    tileSize = ((gridSizePx - (tilePadding * 5) - 30) / 5);
+    tileSize = ((gridSizePx - (tilePadding * 5) - 28) / 5);
 
     List<Widget> stackItems = [];
 
