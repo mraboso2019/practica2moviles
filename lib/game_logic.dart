@@ -5,7 +5,8 @@ import 'defeat_screen.dart';
 class GameLogic {
   List<List<Tile>> tileGrid = [];
   int gridSize = 5; // Tamaño de la cuadrícula (5x5)
-  int? nextNumber; // El próximo número a colocar
+  int? nextNumber;
+  bool gameOver = false;// El próximo número a colocar
 
   GameLogic() {
     initializeGrid();
@@ -58,7 +59,35 @@ class GameLogic {
         }
       }
     }
+    gameOver = possibleMoves();
     return true;
+  }
+
+  bool possibleMoves(){
+    for (int row = 0; row < gridSize; row++) {
+      for (int col = 0; col < gridSize; col++) {
+        int value = tileGrid[row][col].value;
+
+        if (col < gridSize - 1 && tileGrid[row][col + 1].value == value) {
+          return false; // Hay un movimiento posible
+        }
+
+        // Verificar vecino de abajo (si no está en el borde inferior)
+        if (row < gridSize - 1 && tileGrid[row + 1][col].value == value) {
+          return false; // Hay un movimiento posible
+        }
+
+        // Verificar vecino de la izquierda (si no está en el borde izquierdo)
+        if (col > 0 && tileGrid[row][col - 1].value == value) {
+          return false; // Hay un movimiento posible
+        }
+
+        // Verificar vecino de arriba (si no está en el borde superior)
+        if (row > 0 && tileGrid[row - 1][col].value == value) {
+          return false; // Hay un movimiento posible
+        }
+      }
+    }
     return true;
   }
 

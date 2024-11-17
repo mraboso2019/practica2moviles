@@ -58,7 +58,7 @@ class _GameScreenState extends State<GameScreen>
           SnackBar(content: Text("Columna llena. Elige otra columna")),
         );
       }
-      if (gameLogic.isGridfull()) {
+      if (gameLogic.gameOver) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DefeatScreen()),
