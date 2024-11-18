@@ -1,8 +1,11 @@
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
+  int _currentThemeIndex = 0;
+  int get currentThemeIndex => _currentThemeIndex;
   ThemeData _currentTheme = pinkTheme;
   ThemeData get currentTheme => _currentTheme;
 
@@ -10,12 +13,45 @@ class AppTheme extends ChangeNotifier {
   Color tileFontColor = Colors.pink[900]!;
   Color gridBackGroundColor = softGreyPink;
 
+  AppTheme() {
+    _loadTheme();
+  }
+
+  void _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    _currentThemeIndex = prefs.getInt('currentThemeIndex') ?? 0;  // 0 es el valor por defecto
+    _applyTheme(_currentThemeIndex);
+    print(_currentTheme);
+  }
+
+  void _saveTheme(int themeIndex) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('currentThemeIndex', themeIndex);
+  }
+
+  void _applyTheme(int themeIndex) {
+    switch (themeIndex) {
+      case 0:
+        setPinkTheme();
+        break;
+      case 1:
+        setBlueTheme();
+        break;
+      case 2:
+        setPurpleTheme();
+        break;
+      default:
+        setPinkTheme();  // Tema por defecto
+    }
+    notifyListeners();
+    print(_currentTheme);
+  }
+
   void setPinkTheme(){
     _currentTheme = pinkTheme;
     tileFontColor = Colors.pink[900]!;
     numTileColor = pinkTileColors;
     gridBackGroundColor = softGreyPink;
-    notifyListeners();
   }
 
   void setPurpleTheme(){
@@ -23,7 +59,6 @@ class AppTheme extends ChangeNotifier {
     tileFontColor = Colors.white;
     numTileColor = purpleTileColors;
     gridBackGroundColor = softGreyPurple;
-    notifyListeners();
   }
 
   void setBlueTheme(){
@@ -31,7 +66,15 @@ class AppTheme extends ChangeNotifier {
     tileFontColor = Colors.blue[900]!;
     numTileColor = blueGreenTileColors;
     gridBackGroundColor = softGreyBlue;
-    notifyListeners();
+  }
+
+  void changeTheme(int themeIndex) async {
+    _currentThemeIndex = themeIndex;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('currentThemeIndex', themeIndex);  // Guardar el índice del tema
+
+    _applyTheme(_currentThemeIndex);
+    _saveTheme(_currentThemeIndex);
   }
 }
 

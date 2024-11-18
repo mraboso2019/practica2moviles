@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica_2/game_screen.dart';
+import 'package:practica_2/how_to_play.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
 import 'app_theme.dart';
@@ -16,7 +17,6 @@ class PauseGame extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-
               },
               child: Text('RESUME'),
               style: ElevatedButton.styleFrom(
@@ -45,6 +45,19 @@ class PauseGame extends StatelessWidget {
                 );
               },
               child: Text('SETTINGS'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+              ),
+            ),
+            SizedBox(height: 10.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HowToPlay()),
+                );
+              },
+              child: Text('HOW TO PLAY'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),
