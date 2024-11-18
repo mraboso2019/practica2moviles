@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
+import 'package:provider/provider.dart';
+import 'app_theme.dart';
 
 class OptionsScreen extends StatelessWidget {
   @override
@@ -24,7 +26,8 @@ class OptionsScreen extends StatelessWidget {
             SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                // Cambiar el tema cuando se presiona el botón
+                Provider.of<AppTheme>(context, listen: false).toggleTheme();
               },
               child: Text('THEME'),
               style: ElevatedButton.styleFrom(

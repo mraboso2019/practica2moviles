@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 
+class AppTheme extends ChangeNotifier {
+  bool _isPinkTheme = false;
+
+  bool get isPinkTheme => _isPinkTheme;
+
+  void toggleTheme() {
+    _isPinkTheme = !_isPinkTheme;
+    notifyListeners(); // Notifica a los widgets que dependen de este estado
+  }
+
+  // Proporciona el tema actual según el estado
+  ThemeData get currentTheme {
+    return _isPinkTheme ? pinkTheme : purpleTheme;
+  }
+}
+
 const Color lightPink = Color.fromARGB(255, 255, 182, 193);
 const Color darkPink = Color.fromARGB(255, 255, 105, 180);
 const Color palePink = Color.fromARGB(255, 255, 228, 225);
@@ -47,50 +63,50 @@ const Map<int, Color> numTileDarkColors = {
   8192: Color.fromARGB(255, 50, 5, 60),
 };
 
-final ThemeData pinkTheme = ThemeData(
-  primarySwatch: Colors.pink,
-  scaffoldBackgroundColor: lightPink,
-  textTheme: TextTheme(
-    bodyLarge: TextStyle(color: Colors.pink[900]),
-    bodyMedium: TextStyle(color: Colors.pink[900]),
-    bodySmall: TextStyle(color: Colors.pink[900]),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.pink[900],
-      textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+ThemeData get pinkTheme => ThemeData(
+      primarySwatch: Colors.pink,
+      scaffoldBackgroundColor: lightPink,
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(color: Colors.pink[900]),
+        bodyMedium: TextStyle(color: Colors.pink[900]),
+        bodySmall: TextStyle(color: Colors.pink[900]),
       ),
-    ),
-  ),
-  iconTheme: IconThemeData(
-    color: Colors.pink[900],
-    size: 32,
-  ),
-);
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.pink[900],
+          textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.pink[900],
+        size: 32,
+      ),
+    );
 
-final ThemeData purpleTheme = ThemeData(
-  primarySwatch: Colors.deepPurple,
-  scaffoldBackgroundColor: lightPurple,
-  textTheme: TextTheme(
-    bodyLarge: TextStyle(color: Colors.purple[900]),
-    bodyMedium: TextStyle(color: Colors.purple[900]),
-    bodySmall: TextStyle(color: Colors.purple[900]),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.purple[900],
-      textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+ThemeData get purpleTheme => ThemeData(
+      primarySwatch: Colors.deepPurple,
+      scaffoldBackgroundColor: lightPurple,
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(color: Colors.purple[900]),
+        bodyMedium: TextStyle(color: Colors.purple[900]),
+        bodySmall: TextStyle(color: Colors.purple[900]),
       ),
-    ),
-  ),
-  iconTheme: IconThemeData(
-    color: Colors.purple[900],
-    size: 32,
-  ),
-);
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.purple[900],
+          textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.purple[900],
+        size: 32,
+      ),
+    );
