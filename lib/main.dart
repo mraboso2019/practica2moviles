@@ -6,13 +6,13 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '2048',
-      theme: appTheme,
-      home: HomeScreen(),
-    );
-  }
+  class MyApp extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        title: '2048',
+        theme: purpleTheme,
+        home: HomeScreen(),
+      );
+    }
 }
