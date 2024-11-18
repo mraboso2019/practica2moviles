@@ -3,7 +3,7 @@ import 'app_theme.dart';
 import 'tile.dart';
 import 'game_logic.dart';
 import 'defeat_screen.dart';
-import 'options_screen.dart';
+import 'pause_game.dart';
 import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
@@ -313,7 +313,7 @@ class _GameScreenState extends State<GameScreen>
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => OptionsScreen()),
+          MaterialPageRoute(builder: (context) => PauseGame()),
         );
       },
       child: Icon(Icons.menu_rounded),

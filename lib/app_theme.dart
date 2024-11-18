@@ -1,33 +1,37 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
-  bool _isPinkTheme = false;
+  ThemeData _currentTheme = pinkTheme;
+  ThemeData get currentTheme => _currentTheme;
 
-  bool get isPinkTheme => _isPinkTheme;
+  Map<int, Color> numTileColor = pinkTileColors;
+  Color tileFontColor = Colors.pink[900]!;
+  Color gridBackGroundColor = softGreyPink;
 
-  Map<int, Color> numTileColor = purpleTileColors;
-// Color del texto de las tiles
-  Color tileFontColor = Colors.white;
-  Color gridBackGroundColor = softGreyPurple;
-
-  void toggleTheme() {
-    _isPinkTheme = !_isPinkTheme;
-    if (_isPinkTheme) {
-      numTileColor = pinkTileColors;
-      tileFontColor = Colors.pink[900]!;
-      gridBackGroundColor = softGreyPink;
-    }
-    if(!_isPinkTheme){
-      numTileColor = purpleTileColors;
-      tileFontColor = Colors.white;
-      gridBackGroundColor = softGreyPurple;
-    }
+  void setPinkTheme(){
+    _currentTheme = pinkTheme;
+    tileFontColor = Colors.pink[900]!;
+    numTileColor = pinkTileColors;
+    gridBackGroundColor = softGreyPink;
     notifyListeners();
   }
 
-  // Proporciona el tema actual según el estado
-  ThemeData get currentTheme {
-    return _isPinkTheme ? pinkTheme : purpleTheme;
+  void setPurpleTheme(){
+    _currentTheme = purpleTheme;
+    tileFontColor = Colors.white;
+    numTileColor = purpleTileColors;
+    gridBackGroundColor = softGreyPurple;
+    notifyListeners();
+  }
+
+  void setBlueTheme(){
+    _currentTheme = blueTheme;
+    tileFontColor = Colors.blue[900]!;
+    numTileColor = blueGreenTileColors;
+    gridBackGroundColor = softGreyBlue;
+    notifyListeners();
   }
 }
 
@@ -43,6 +47,11 @@ const Color palePurple = Color.fromARGB(255, 240, 224, 250);
 const Color softGreyPurple = Color.fromARGB(255, 141, 94, 156);
 const Color deepPurple = Color(0xFF4A235A);
 
+const Color lightBlueGreen = Color.fromARGB(255, 173, 216, 230);
+const Color mediumBlueGreen = Color.fromARGB(255, 85, 185, 228);
+const Color darkBlueGreen = Color.fromARGB(255, 60, 170, 200);
+const Color softGreyBlue = Color.fromARGB(255, 94, 114, 156);
+const Color deepBlueGreen = Color.fromARGB(255, 30, 100, 150);
 
 const Map<int, Color> pinkTileColors = {
   0: Colors.white,
@@ -77,6 +86,23 @@ const Map<int, Color> purpleTileColors = {
   2048: Color.fromARGB(255, 70, 5, 80),
   4096: Color.fromARGB(255, 60, 5, 70),
   8192: Color.fromARGB(255, 50, 5, 60),
+};
+
+const Map<int, Color> blueGreenTileColors = {
+  0: Colors.white,
+  2: Color.fromARGB(255, 200, 230, 255),
+  4: Color.fromARGB(255, 175, 220, 245),
+  8: Color.fromARGB(255, 150, 210, 250),
+  16: Color.fromARGB(255, 130, 190, 245),
+  32: Color.fromARGB(255, 110, 170, 230),
+  64: Color.fromARGB(255, 90, 150, 215),
+  128: Color.fromARGB(255, 70, 130, 200),
+  256: Color.fromARGB(255, 50, 110, 180),
+  512: Color.fromARGB(255, 30, 90, 160),
+  1024: Color.fromARGB(255, 10, 70, 140),
+  2048: Color.fromARGB(255, 0, 50, 120),
+  4096: Color.fromARGB(255, 0, 40, 100),
+  8192: Color.fromARGB(255, 0, 30, 80),
 };
 
 ThemeData get pinkTheme => ThemeData(
@@ -126,3 +152,28 @@ ThemeData get purpleTheme => ThemeData(
         size: 32,
       ),
     );
+
+ThemeData get blueTheme => ThemeData(
+  primarySwatch: Colors.lightBlue,
+  scaffoldBackgroundColor: lightBlueGreen,
+  textTheme: TextTheme(
+    bodyLarge: TextStyle(color: Colors.blue[900]),
+    bodyMedium: TextStyle(color: Colors.blue[900]),
+    bodySmall: TextStyle(color: Colors.blue[900]),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.blue[900],
+      textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    ),
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.blue[900],
+    size: 32,
+  ),
+);
+

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:practica_2/defeat_screen.dart';
 import 'package:practica_2/how_to_play.dart';
+import 'package:practica_2/settings.dart';
 import 'game_screen.dart';
-import 'options_screen.dart';
+import 'settings.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -31,10 +32,10 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OptionsScreen()),
+                  MaterialPageRoute(builder: (context) => Settings()),
                 );
               },
-              child: Text('OPTIONS'),
+              child: Text('SETTINGS'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),

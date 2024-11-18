@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:practica_2/game_screen.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
 import 'app_theme.dart';
+import 'settings.dart';
 
-class OptionsScreen extends StatelessWidget {
+class PauseGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,12 +15,23 @@ class OptionsScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
+                Navigator.pop(context);
+
+              },
+              child: Text('RESUME'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+              ),
+            ),
+            SizedBox(height: 10.0),
+            ElevatedButton(
+              onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(builder: (context) => GameScreen()),
                 );
               },
-              child: Text('MENU'),
+              child: Text('NEW GAME'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),
@@ -26,20 +39,12 @@ class OptionsScreen extends StatelessWidget {
             SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () {
-                // Cambiar el tema cuando se presiona el botón
-                Provider.of<AppTheme>(context, listen: false).toggleTheme();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Settings()),
+                );
               },
-              child: Text('THEME'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
-              ),
-            ),
-            SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('BACK'),
+              child: Text('SETTINGS'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
               ),
