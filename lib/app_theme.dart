@@ -5,9 +5,24 @@ class AppTheme extends ChangeNotifier {
 
   bool get isPinkTheme => _isPinkTheme;
 
+  Map<int, Color> numTileColor = purpleTileColors;
+// Color del texto de las tiles
+  Color tileFontColor = Colors.white;
+  Color gridBackGroundColor = softGreyPurple;
+
   void toggleTheme() {
     _isPinkTheme = !_isPinkTheme;
-    notifyListeners(); // Notifica a los widgets que dependen de este estado
+    if (_isPinkTheme) {
+      numTileColor = pinkTileColors;
+      tileFontColor = Colors.pink[900]!;
+      gridBackGroundColor = softGreyPink;
+    }
+    if(!_isPinkTheme){
+      numTileColor = purpleTileColors;
+      tileFontColor = Colors.white;
+      gridBackGroundColor = softGreyPurple;
+    }
+    notifyListeners();
   }
 
   // Proporciona el tema actual según el estado
@@ -25,10 +40,11 @@ const Color purplePink = Color(0xFF3D2C3B);
 const Color lightPurple = Color.fromARGB(255, 220, 198, 245);
 const Color darkPurple = Color.fromARGB(255, 153, 102, 204);
 const Color palePurple = Color.fromARGB(255, 240, 224, 250);
-const Color softGreyPurple = Color.fromARGB(255, 175, 138, 191);
+const Color softGreyPurple = Color.fromARGB(255, 141, 94, 156);
 const Color deepPurple = Color(0xFF4A235A);
 
-const Map<int, Color> numTileColor = {
+
+const Map<int, Color> pinkTileColors = {
   0: Colors.white,
   //2: Color.fromARGB(255, 255, 192, 203),
   2: palePink,
@@ -46,7 +62,7 @@ const Map<int, Color> numTileColor = {
   8192: Color.fromARGB(255, 120, 5, 60),
 };
 
-const Map<int, Color> numTileDarkColors = {
+const Map<int, Color> purpleTileColors = {
   0: Colors.white,
   2: lightPurple,
   4: Color.fromARGB(255, 175, 138, 191),

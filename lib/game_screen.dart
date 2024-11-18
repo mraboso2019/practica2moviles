@@ -4,6 +4,7 @@ import 'tile.dart';
 import 'game_logic.dart';
 import 'defeat_screen.dart';
 import 'options_screen.dart';
+import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
   @override
@@ -147,6 +148,9 @@ class _GameScreenState extends State<GameScreen>
     double gridSizePx = MediaQuery.of(context).size.width - outerPadding * 2;
     double tilePadding = 4.0;
     tileSize = ((gridSizePx - (tilePadding * 5) - 28) / 5);
+    Map<int, Color> numTileColor = Provider.of<AppTheme>(context).numTileColor;
+    Color tileFontColor = Provider.of<AppTheme>(context).tileFontColor;
+    Color gridBackGroundColor = Provider.of<AppTheme>(context).gridBackGroundColor;
 
     List<Widget> stackItems = [];
 
@@ -191,8 +195,7 @@ class _GameScreenState extends State<GameScreen>
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: tile.value != null && tile.value! <= 32
-                            ? Colors
-                                .pink[900] // Color si la condición es verdadera
+                            ? tileFontColor
                             : Colors.white,
                       ),
                     ),
@@ -234,7 +237,7 @@ class _GameScreenState extends State<GameScreen>
                   fontWeight: FontWeight.bold,
                   color: gameLogic.nextNumber != null &&
                           gameLogic.nextNumber! <= 32
-                      ? Colors.pink[900] // Color si la condición es verdadera
+                      ? tileFontColor // Color si la condición es verdadera
                       : Colors.white, // Color si la condición es falsa
                 ),
               ),
@@ -355,7 +358,7 @@ class _GameScreenState extends State<GameScreen>
                   padding: EdgeInsets.all(4.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
-                    color: softGreyPink,
+                    color: gridBackGroundColor,
                   ),
                   child: Stack(children: stackItems),
                 ),
