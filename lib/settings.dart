@@ -24,6 +24,7 @@ class _SettingsState extends State<Settings> {
                   padding: EdgeInsets.only(top: 20.0),
                   // Ajusta el valor según el espacio que desees
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -41,7 +42,7 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(width: 20),
                       Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 6.0),
