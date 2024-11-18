@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
   int _currentThemeIndex = 0;
+
   int get currentThemeIndex => _currentThemeIndex;
   ThemeData _currentTheme = pinkTheme;
+
   ThemeData get currentTheme => _currentTheme;
 
   Map<int, Color> numTileColor = pinkTileColors;
@@ -19,7 +21,8 @@ class AppTheme extends ChangeNotifier {
 
   void _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    _currentThemeIndex = prefs.getInt('currentThemeIndex') ?? 0;  // 0 es el valor por defecto
+    _currentThemeIndex =
+        prefs.getInt('currentThemeIndex') ?? 0; // 0 es el valor por defecto
     _applyTheme(_currentThemeIndex);
     print(_currentTheme);
   }
@@ -41,27 +44,27 @@ class AppTheme extends ChangeNotifier {
         setPurpleTheme();
         break;
       default:
-        setPinkTheme();  // Tema por defecto
+        setPinkTheme(); // Tema por defecto
     }
     notifyListeners();
     print(_currentTheme);
   }
 
-  void setPinkTheme(){
+  void setPinkTheme() {
     _currentTheme = pinkTheme;
     tileFontColor = Colors.pink[900]!;
     numTileColor = pinkTileColors;
     gridBackGroundColor = softGreyPink;
   }
 
-  void setPurpleTheme(){
+  void setPurpleTheme() {
     _currentTheme = purpleTheme;
     tileFontColor = Colors.white;
     numTileColor = purpleTileColors;
     gridBackGroundColor = softGreyPurple;
   }
 
-  void setBlueTheme(){
+  void setBlueTheme() {
     _currentTheme = blueTheme;
     tileFontColor = Colors.blue[900]!;
     numTileColor = blueGreenTileColors;
@@ -71,7 +74,7 @@ class AppTheme extends ChangeNotifier {
   void changeTheme(int themeIndex) async {
     _currentThemeIndex = themeIndex;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('currentThemeIndex', themeIndex);  // Guardar el índice del tema
+    prefs.setInt('currentThemeIndex', themeIndex); // Guardar el índice del tema
 
     _applyTheme(_currentThemeIndex);
     _saveTheme(_currentThemeIndex);
@@ -170,6 +173,14 @@ ThemeData get pinkTheme => ThemeData(
         color: Colors.pink[900],
         size: 32,
       ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateColor.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return softGreyPink;
+          }
+          return Colors.white; // Color cuando no está seleccionado
+        }),
+      ),
     );
 
 ThemeData get purpleTheme => ThemeData(
@@ -194,29 +205,44 @@ ThemeData get purpleTheme => ThemeData(
         color: Colors.purple[900],
         size: 32,
       ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateColor.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return softGreyPurple;
+          }
+          return Colors.white; // Color cuando no está seleccionado
+        }),
+      ),
     );
 
 ThemeData get blueTheme => ThemeData(
-  primarySwatch: Colors.lightBlue,
-  scaffoldBackgroundColor: lightBlueGreen,
-  textTheme: TextTheme(
-    bodyLarge: TextStyle(color: Colors.blue[900]),
-    bodyMedium: TextStyle(color: Colors.blue[900]),
-    bodySmall: TextStyle(color: Colors.blue[900]),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.blue[900],
-      textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+      primarySwatch: Colors.lightBlue,
+      scaffoldBackgroundColor: lightBlueGreen,
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(color: Colors.blue[900]),
+        bodyMedium: TextStyle(color: Colors.blue[900]),
+        bodySmall: TextStyle(color: Colors.blue[900]),
       ),
-    ),
-  ),
-  iconTheme: IconThemeData(
-    color: Colors.blue[900],
-    size: 32,
-  ),
-);
-
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.blue[900],
+          textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.blue[900],
+        size: 32,
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateColor.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return softGreyBlue;
+          }
+          return Colors.white; // Color cuando no está seleccionado
+        }),
+      ),
+    );
