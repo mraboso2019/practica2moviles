@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
-import 'background_music.dart';  // Este es tu archivo donde manejas la música
+  // Este es tu archivo donde manejas la música
 
 void main() {
   runApp(MyApp());
