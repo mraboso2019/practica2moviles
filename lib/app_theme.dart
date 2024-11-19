@@ -181,6 +181,20 @@ ThemeData get pinkTheme => ThemeData(
           return Colors.white; // Color cuando no está seleccionado
         }),
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white;
+          }
+          return Colors.grey[700];
+        }),
+        trackColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return softGreyPink;
+          }
+          return Colors.grey[300];
+        }),
+      ),
     );
 
 ThemeData get purpleTheme => ThemeData(
@@ -213,6 +227,20 @@ ThemeData get purpleTheme => ThemeData(
           return Colors.white; // Color cuando no está seleccionado
         }),
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white;
+          }
+          return Colors.grey[700];
+        }),
+        trackColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return softGreyPurple;
+          }
+          return Colors.grey[300];
+        }),
+      ),
     );
 
 ThemeData get blueTheme => ThemeData(
@@ -243,6 +271,20 @@ ThemeData get blueTheme => ThemeData(
             return softGreyBlue;
           }
           return Colors.white; // Color cuando no está seleccionado
+        }),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return Colors.white;
+          }
+          return Colors.grey[700];
+        }),
+        trackColor: MaterialStateProperty.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return softGreyBlue;
+          }
+          return Colors.grey[300];
         }),
       ),
     );

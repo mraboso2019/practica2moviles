@@ -9,6 +9,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  bool isPlayingMusic = true;
+  bool isSoundEffects = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,21 +80,39 @@ class _SettingsState extends State<Settings> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(height: 10),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.75,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         color: Colors.white,
                       ),
-                      child: CheckboxListTile(
-                        title: Text("YES"),
-                        value: appTheme.currentThemeIndex == 0,
-                        onChanged: (value) {
-
-                        },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              isPlayingMusic ? 'ON' : 'OFF',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Switch(
+                              value: isPlayingMusic,
+                              onChanged: (value) {
+                                setState(() {
+                                  isPlayingMusic = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+
                     SizedBox(height: 20),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.75,
@@ -108,6 +129,38 @@ class _SettingsState extends State<Settings> {
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              isSoundEffects ? 'ON' : 'OFF',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Switch(
+                              value: isSoundEffects,
+                              onChanged: (value) {
+                                setState(() {
+                                  isSoundEffects = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 20),
