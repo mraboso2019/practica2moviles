@@ -39,7 +39,6 @@ dependencies:
   shared_preferences: ^2.0.15
   animations: ^2.0.0
   audioplayers: ^6.1.0
-  assets_audio_player: ^3.0.0
 
 dev_dependencies:
   flutter_test:

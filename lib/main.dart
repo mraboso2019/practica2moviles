@@ -3,7 +3,6 @@ import 'app_theme.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
 import 'background_music.dart';  // Este es tu archivo donde manejas la música
-import 'package:assets_audio_player/assets_audio_player.dart';
 
 void main() {
   runApp(MyApp());
