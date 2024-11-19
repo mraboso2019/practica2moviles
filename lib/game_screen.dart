@@ -5,6 +5,7 @@ import 'game_logic.dart';
 import 'defeat_screen.dart';
 import 'pause_game.dart';
 import 'package:provider/provider.dart';
+import 'package:animations/animations.dart';
 
 class GameScreen extends StatefulWidget {
   @override
@@ -62,9 +63,19 @@ class _GameScreenState extends State<GameScreen>
         );
       }
       if (gameLogic.gameOver) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DefeatScreen()),
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                DefeatScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+          ),
         );
       }
     });
@@ -150,7 +161,8 @@ class _GameScreenState extends State<GameScreen>
     tileSize = ((gridSizePx - (tilePadding * 5) - 28) / 5);
     Map<int, Color> numTileColor = Provider.of<AppTheme>(context).numTileColor;
     Color tileFontColor = Provider.of<AppTheme>(context).tileFontColor;
-    Color gridBackGroundColor = Provider.of<AppTheme>(context).gridBackGroundColor;
+    Color gridBackGroundColor =
+        Provider.of<AppTheme>(context).gridBackGroundColor;
 
     List<Widget> stackItems = [];
 

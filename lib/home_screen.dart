@@ -4,6 +4,7 @@ import 'package:practica_2/how_to_play.dart';
 import 'package:practica_2/settings.dart';
 import 'game_screen.dart';
 import 'settings.dart';
+import 'package:animations/animations.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,9 +17,19 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => GameScreen()),
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        GameScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        child: child,
+                      );
+                    },
+                  ),
                 );
               },
               child: Text('START'),
@@ -28,11 +39,20 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             ElevatedButton(
-
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Settings()),
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        Settings(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        child: child,
+                      );
+                    },
+                  ),
                 );
               },
               child: Text('SETTINGS'),
@@ -41,12 +61,21 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.0),
-
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HowToPlay()),
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        HowToPlay(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        child: child,
+                      );
+                    },
+                  ),
                 );
               },
               child: Text('HOW TO PLAY'),

@@ -42,7 +42,7 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20),
+                      SizedBox(width: 10),
                       Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 6.0),
@@ -75,6 +75,21 @@ class _SettingsState extends State<Settings> {
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.white,
+                      ),
+                      child: CheckboxListTile(
+                        title: Text("YES"),
+                        value: appTheme.currentThemeIndex == 0,
+                        onChanged: (value) {
+
+                        },
                       ),
                     ),
                     SizedBox(height: 20),

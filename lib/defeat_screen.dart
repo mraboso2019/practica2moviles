@@ -6,7 +6,6 @@ class DefeatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Pantalla Derrota')),
       body: Center(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
