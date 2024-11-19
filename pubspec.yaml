@@ -38,6 +38,13 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.0.15
   animations: ^2.0.0
+  audioplayers: ^6.1.0
+
+
+
+assets:
+  - assets/sound_effects/button_click.mp3
+  - assets/music/background_music.mp3
 
 dev_dependencies:
   flutter_test:
