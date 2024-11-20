@@ -45,13 +45,13 @@ class GameLogic {
       }
     }
 
-    isGridfull();
+    isGridFull();
     // Si llega aquí, significa que la columna está llena
     print("Column $column is full. Could not place $nextNumber");
     return false;
   }
 
-  bool isGridfull() {
+  bool isGridFull() {
     for (int row = 0; row < gridSize; row++) {
       for (int col = 0; col < gridSize; col++) {
         if (tileGrid[row][col].value == 0) {

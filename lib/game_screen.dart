@@ -143,6 +143,7 @@ class _GameScreenState extends State<GameScreen>
                   gameLogic.tileGrid[row - 1][col].value &&
               gameLogic.tileGrid[row][col].value != 0) {
             gameLogic.tileGrid[row][col].value *= 2;
+            score += gameLogic.tileGrid[row][col].value;
             gameLogic.tileGrid[row - 1][col].value = 0;
             didCombine = true; // Marcamos que hubo una combinación
           }
