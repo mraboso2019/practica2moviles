@@ -4,6 +4,8 @@ import 'app_theme.dart';
 import 'home_screen.dart';
 import 'settings.dart';
 import 'package:provider/provider.dart';
+import 'pause_game.dart';
+import 'defeat_screen.dart';
 
 // Este es tu archivo donde manejas la música
 

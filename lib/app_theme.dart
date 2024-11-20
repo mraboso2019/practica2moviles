@@ -14,6 +14,7 @@ class AppTheme extends ChangeNotifier {
   Map<int, Color> numTileColor = pinkTileColors;
   Color tileFontColor = Colors.pink[900]!;
   Color gridBackGroundColor = softGreyPink;
+  Color backgroundColor = lightPink;
 
   AppTheme() {
     _loadTheme();
@@ -55,6 +56,7 @@ class AppTheme extends ChangeNotifier {
     tileFontColor = Colors.pink[900]!;
     numTileColor = pinkTileColors;
     gridBackGroundColor = softGreyPink;
+    backgroundColor = lightPink;
   }
 
   void setPurpleTheme() {
@@ -62,6 +64,7 @@ class AppTheme extends ChangeNotifier {
     tileFontColor = Colors.white;
     numTileColor = purpleTileColors;
     gridBackGroundColor = softGreyPurple;
+    backgroundColor = lightPurple;
   }
 
   void setBlueTheme() {
@@ -69,6 +72,7 @@ class AppTheme extends ChangeNotifier {
     tileFontColor = Colors.blue[900]!;
     numTileColor = blueGreenTileColors;
     gridBackGroundColor = softGreyBlue;
+    backgroundColor = lightBlueGreen;
   }
 
   void changeTheme(int themeIndex) async {
@@ -79,6 +83,18 @@ class AppTheme extends ChangeNotifier {
     _applyTheme(_currentThemeIndex);
     _saveTheme(_currentThemeIndex);
   }
+
+  BoxDecoration get gradientBackground => BoxDecoration(
+    gradient: LinearGradient(
+      colors: [
+        backgroundColor,
+        gridBackGroundColor,
+        backgroundColor,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+  );
 }
 
 const Color lightPink = Color.fromARGB(255, 255, 182, 193);

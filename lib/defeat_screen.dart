@@ -1,48 +1,125 @@
 import 'package:flutter/material.dart';
 import 'package:practica_2/game_screen.dart';
 import 'package:practica_2/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'app_theme.dart';
 
 class DefeatScreen extends StatelessWidget {
+  final int score;
+
+  DefeatScreen({required this.score});
+
   @override
   Widget build(BuildContext context) {
+    final gradientDecoration =
+        Provider.of<AppTheme>(context).gradientBackground;
+    final numTileColor =
+        Provider.of<AppTheme>(context).numTileColor;
+
     return Scaffold(
-      body: Center(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('You lost :(',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w500,
-                  )),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+      body: Container(
+        decoration: gradientDecoration,
+        child: Center(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(flex: 20),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('GAME OVER',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.w500,
+                          )),
+                    ],
+                  ),
                 ),
-                child: Text('MENU'),
-              ),
-              SizedBox(height: 10.0),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GameScreen()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(MediaQuery.of(context).size.width / 2, 40),
+                const Spacer(flex: 1),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text('FINAL SCORE',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.75,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: numTileColor[2],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(' $score',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Text('NEW GAME'),
-              ),
-            ]),
+                const Spacer(flex: 1),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width / 2, 40),
+                  ),
+                  child: Text('MENU'),
+                ),
+                const Spacer(flex: 1),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GameScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize:
+                        Size(MediaQuery.of(context).size.width / 2, 40),
+                  ),
+                  child: Text('NEW GAME'),
+                ),
+                const Spacer(flex: 20),
+              ]),
+        ),
       ),
     );
   }

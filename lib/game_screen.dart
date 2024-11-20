@@ -6,6 +6,7 @@ import 'defeat_screen.dart';
 import 'pause_game.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
+import 'app_theme.dart';
 
 class GameScreen extends StatefulWidget {
   @override
@@ -66,7 +67,7 @@ class _GameScreenState extends State<GameScreen>
         Navigator.of(context).push(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                DefeatScreen(),
+                DefeatScreen(score: score),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeThroughTransition(
@@ -164,6 +165,8 @@ class _GameScreenState extends State<GameScreen>
     Color tileFontColor = Provider.of<AppTheme>(context).tileFontColor;
     Color gridBackGroundColor =
         Provider.of<AppTheme>(context).gridBackGroundColor;
+    final gradientDecoration =
+        Provider.of<AppTheme>(context).gradientBackground;
 
     List<Widget> stackItems = [];
 
@@ -334,75 +337,78 @@ class _GameScreenState extends State<GameScreen>
 
     return Scaffold(
       //appBar: AppBar(title: Text('Partida en curso')),
-      body: Stack(
-        children: [
-          Positioned(
-              top: MediaQuery.of(context).size.height / 12,
-              left: outerPadding,
-              child: options),
-          //showScore,
-          //showMoves,
-          Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height / 12),
-            //padding: EdgeInsets.only(top: 60),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                showScore,
-                SizedBox(width: 20.0),
-                showMoves,
-                SizedBox(width: outerPadding),
-              ],
+      body: Container(
+        decoration: gradientDecoration,
+        child: Stack(
+          children: [
+            Positioned(
+                top: MediaQuery.of(context).size.height / 12,
+                left: outerPadding,
+                child: options),
+            //showScore,
+            //showMoves,
+            Padding(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 12),
+              //padding: EdgeInsets.only(top: 60),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  showScore,
+                  SizedBox(width: 20.0),
+                  showMoves,
+                  SizedBox(width: outerPadding),
+                ],
+              ),
             ),
-          ),
 
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // Centrar verticalmente
-              children: [
-                // Caja del próximo número
-                nextNumberDisplay,
-                SizedBox(height: 20.0),
-                // Caja de la cuadrícula
-                Container(
-                  width: gridSizePx,
-                  height: gridSizePx,
-                  padding: EdgeInsets.all(4.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: gridBackGroundColor,
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Centrar verticalmente
+                children: [
+                  // Caja del próximo número
+                  nextNumberDisplay,
+                  SizedBox(height: 20.0),
+                  // Caja de la cuadrícula
+                  Container(
+                    width: gridSizePx,
+                    height: gridSizePx,
+                    padding: EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: gridBackGroundColor,
+                    ),
+                    child: Stack(children: stackItems),
                   ),
-                  child: Stack(children: stackItems),
-                ),
-                SizedBox(height: 20.0),
-                // Fila con flechas
-                Container(
-                  width: gridSizePx,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: List.generate(gridSize, (index) {
-                      return GestureDetector(
-                        onTap: () => onColumnTap(index),
-                        child: Container(
-                          width: tileSize,
-                          height: tileSize / 1.5,
-                          color: Colors.transparent,
-                          child: Center(
-                            child: Icon(
-                              //Icons.arrow_downward_rounded,
-                              Icons.keyboard_double_arrow_down_rounded,
+                  SizedBox(height: 20.0),
+                  // Fila con flechas
+                  Container(
+                    width: gridSizePx,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List.generate(gridSize, (index) {
+                        return GestureDetector(
+                          onTap: () => onColumnTap(index),
+                          child: Container(
+                            width: tileSize,
+                            height: tileSize / 1.5,
+                            color: Colors.transparent,
+                            child: Center(
+                              child: Icon(
+                                //Icons.arrow_downward_rounded,
+                                Icons.keyboard_double_arrow_down_rounded,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
