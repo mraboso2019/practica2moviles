@@ -3,6 +3,8 @@ import 'home_screen.dart';
 import 'package:provider/provider.dart';
 import 'app_theme.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'music_state.dart';
+
 
 class Settings extends StatefulWidget {
   @override
@@ -10,12 +12,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  bool isPlayingMusic = false;
   bool isSoundEffects = false;
   final player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
+    final musicState = Provider.of<MusicState>(context);
     return Scaffold(
       body: Consumer<AppTheme>(
         builder: (context, appTheme, child) {
@@ -95,7 +97,7 @@ class _SettingsState extends State<Settings> {
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
                             child: Text(
-                              isPlayingMusic ? 'ON' : 'OFF',
+                              musicState.isPlayingMusic ? 'ON' : 'OFF',
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
@@ -103,16 +105,9 @@ class _SettingsState extends State<Settings> {
                           Padding(
                             padding: const EdgeInsets.only(right: 16.0),
                             child: Switch(
-                              value: isPlayingMusic,
+                              value: musicState.isPlayingMusic,
                               onChanged: (value) {
-                                setState(() {
-                                  isPlayingMusic = value;
-                                });
-                                if (isPlayingMusic) {
-                                  player.play(AssetSource('background_music.mp3'));
-                                } else {
-                                  player.pause();
-                                }
+                                musicState.toggleMusic();
                               },
                             ),
                           ),
