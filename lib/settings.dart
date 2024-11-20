@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
 import 'app_theme.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -9,8 +10,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  bool isPlayingMusic = true;
-  bool isSoundEffects = true;
+  bool isPlayingMusic = false;
+  bool isSoundEffects = false;
+  final player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -106,13 +108,17 @@ class _SettingsState extends State<Settings> {
                                 setState(() {
                                   isPlayingMusic = value;
                                 });
+                                if (isPlayingMusic) {
+                                  player.play(AssetSource('background_music.mp3'));
+                                } else {
+                                  player.pause();
+                                }
                               },
                             ),
                           ),
                         ],
                       ),
                     ),
-
                     SizedBox(height: 20),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.75,

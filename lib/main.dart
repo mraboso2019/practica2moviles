@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:practica_2/music_test.dart';
 import 'app_theme.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
+
   // Este es tu archivo donde manejas la música
 
 void main() {
