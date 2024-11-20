@@ -87,12 +87,12 @@ class AppTheme extends ChangeNotifier {
   BoxDecoration get gradientBackground => BoxDecoration(
     gradient: LinearGradient(
       colors: [
-        backgroundColor,
         gridBackGroundColor,
         backgroundColor,
+        gridBackGroundColor,
       ],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
     ),
   );
 }
