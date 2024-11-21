@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
@@ -87,16 +86,16 @@ class AppTheme extends ChangeNotifier {
   }
 
   BoxDecoration get gradientBackground => BoxDecoration(
-    gradient: LinearGradient(
-      colors: [
-        gridBackGroundColor,
-        backgroundColor,
-        gridBackGroundColor,
-      ],
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-    ),
-  );
+        gradient: LinearGradient(
+          colors: [
+            gridBackGroundColor,
+            backgroundColor,
+            gridBackGroundColor,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      );
 }
 
 const Color lightPink = Color.fromARGB(255, 255, 182, 193);
@@ -172,22 +171,30 @@ const Map<int, Color> blueGreenTileColors = {
 ThemeData get pinkTheme => ThemeData(
       primarySwatch: Colors.pink,
       scaffoldBackgroundColor: lightPink,
-  textTheme: TextTheme(
-    bodyLarge: GoogleFonts.pangolin(
-      textStyle: TextStyle(color: Colors.pink[900]),
-    ),
-    bodyMedium: GoogleFonts.pangolin(
-      textStyle: TextStyle(color: Colors.pink[900]),
-    ),
-    bodySmall: GoogleFonts.pangolin(
-      textStyle: TextStyle(color: Colors.pink[900]),
-    ),
-  ),
+      textTheme: TextTheme(
+        bodyLarge: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.pink[900]),
+          fontWeight: FontWeight.w500,
+        ),
+        bodyMedium: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.pink[900]),
+          fontWeight: FontWeight.w500,
+        ),
+        bodySmall: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.pink[900]),
+          fontWeight: FontWeight.w500,
+        ),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.pink[900],
-          textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          //textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          textStyle: GoogleFonts.fredoka(
+            // Cambia "lobster" por la fuente que prefieras
+            fontSize: 25,
+            fontWeight: FontWeight.w500,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -224,16 +231,29 @@ ThemeData get pinkTheme => ThemeData(
 ThemeData get purpleTheme => ThemeData(
       primarySwatch: Colors.deepPurple,
       scaffoldBackgroundColor: lightPurple,
-      textTheme: TextTheme(
-        bodyLarge: TextStyle(color: Colors.purple[900]),
-        bodyMedium: TextStyle(color: Colors.purple[900]),
-        bodySmall: TextStyle(color: Colors.purple[900]),
-      ),
+  textTheme: TextTheme(
+    bodyLarge: GoogleFonts.fredoka(
+      textStyle: TextStyle(color: Colors.purple[900]),
+      fontWeight: FontWeight.w500,
+    ),
+    bodyMedium: GoogleFonts.fredoka(
+      textStyle: TextStyle(color: Colors.purple[900]),
+      fontWeight: FontWeight.w500,
+    ),
+    bodySmall: GoogleFonts.fredoka(
+      textStyle: TextStyle(color: Colors.purple[900]),
+      fontWeight: FontWeight.w500,
+    ),
+  ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.purple[900],
-          textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          textStyle: GoogleFonts.fredoka(
+            // Cambia "lobster" por la fuente que prefieras
+            fontSize: 25,
+            fontWeight: FontWeight.w500,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -270,16 +290,29 @@ ThemeData get purpleTheme => ThemeData(
 ThemeData get blueTheme => ThemeData(
       primarySwatch: Colors.lightBlue,
       scaffoldBackgroundColor: lightBlueGreen,
-      textTheme: TextTheme(
-        bodyLarge: TextStyle(color: Colors.blue[900]),
-        bodyMedium: TextStyle(color: Colors.blue[900]),
-        bodySmall: TextStyle(color: Colors.blue[900]),
-      ),
+  textTheme: TextTheme(
+    bodyLarge: GoogleFonts.fredoka(
+      textStyle: TextStyle(color: Colors.blue[900]),
+      fontWeight: FontWeight.w500,
+    ),
+    bodyMedium: GoogleFonts.fredoka(
+      textStyle: TextStyle(color: Colors.blue[900]),
+      fontWeight: FontWeight.w500,
+    ),
+    bodySmall: GoogleFonts.fredoka(
+      textStyle: TextStyle(color: Colors.blue[900]),
+      fontWeight: FontWeight.w500,
+    ),
+  ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.blue[900],
-          textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          textStyle: GoogleFonts.fredoka(
+            // Cambia "lobster" por la fuente que prefieras
+            fontSize: 25,
+            fontWeight: FontWeight.w500,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
