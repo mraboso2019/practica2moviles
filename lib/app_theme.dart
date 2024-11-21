@@ -232,15 +232,15 @@ ThemeData get purpleTheme => ThemeData(
       primarySwatch: Colors.deepPurple,
       scaffoldBackgroundColor: lightPurple,
   textTheme: TextTheme(
-    bodyLarge: GoogleFonts.fredoka(
+    bodyLarge: GoogleFonts.varelaRound(
       textStyle: TextStyle(color: Colors.purple[900]),
       fontWeight: FontWeight.w500,
     ),
-    bodyMedium: GoogleFonts.fredoka(
+    bodyMedium: GoogleFonts.varelaRound(
       textStyle: TextStyle(color: Colors.purple[900]),
       fontWeight: FontWeight.w500,
     ),
-    bodySmall: GoogleFonts.fredoka(
+    bodySmall: GoogleFonts.varelaRound(
       textStyle: TextStyle(color: Colors.purple[900]),
       fontWeight: FontWeight.w500,
     ),
@@ -249,7 +249,7 @@ ThemeData get purpleTheme => ThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.purple[900],
-          textStyle: GoogleFonts.fredoka(
+          textStyle: GoogleFonts.varelaRound(
             // Cambia "lobster" por la fuente que prefieras
             fontSize: 25,
             fontWeight: FontWeight.w500,
