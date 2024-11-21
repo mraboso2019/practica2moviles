@@ -103,7 +103,7 @@ const Color palePink = Color.fromARGB(255, 255, 228, 225);
 const Color softGreyPink = Color.fromARGB(255, 219, 112, 147);
 const Color purplePink = Color(0xFF3D2C3B);
 
-const Color lightPurple = Color.fromARGB(255, 220, 198, 245);
+const Color lightPurple = Color.fromARGB(255, 215, 178, 253);
 const Color darkPurple = Color.fromARGB(255, 153, 102, 204);
 const Color palePurple = Color.fromARGB(255, 240, 224, 250);
 const Color softGreyPurple = Color.fromARGB(255, 141, 94, 156);
@@ -187,7 +187,7 @@ ThemeData get pinkTheme => ThemeData(
       ),
       iconTheme: IconThemeData(
         color: Colors.pink[900],
-        size: 32,
+        size: 36,
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith((states) {
@@ -233,7 +233,7 @@ ThemeData get purpleTheme => ThemeData(
       ),
       iconTheme: IconThemeData(
         color: Colors.purple[900],
-        size: 32,
+        size: 36,
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith((states) {
@@ -279,7 +279,7 @@ ThemeData get blueTheme => ThemeData(
       ),
       iconTheme: IconThemeData(
         color: Colors.blue[900],
-        size: 32,
+        size: 36,
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith((states) {

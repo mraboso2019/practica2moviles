@@ -60,7 +60,7 @@ class _GameScreenState extends State<GameScreen>
         applyGravity(); // Aplica la gravedad después de colocar la ficha
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Columna llena. Elige otra columna")),
+          SnackBar(content: Text("Full column. Choose another one.")),
         );
       }
       if (gameLogic.gameOver) {
@@ -336,78 +336,70 @@ class _GameScreenState extends State<GameScreen>
     );
 
     return Scaffold(
-      //appBar: AppBar(title: Text('Partida en curso')),
       body: Container(
         decoration: gradientDecoration,
-        child: Stack(
-          children: [
-            Positioned(
-                top: MediaQuery.of(context).size.height / 12,
-                left: outerPadding,
-                child: options),
-            //showScore,
-            //showMoves,
-            Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 12),
-              //padding: EdgeInsets.only(top: 60),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  showScore,
-                  SizedBox(width: 20.0),
-                  showMoves,
-                  SizedBox(width: outerPadding),
-                ],
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Spacer(flex: 5),
+              Container(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height / 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: outerPadding),
+                    options,
+                    const Spacer(flex: 10),
+                    showScore,
+                    const Spacer(flex: 1),
+                    showMoves,
+                    SizedBox(width: outerPadding),
+                  ],
+                ),
               ),
-            ),
-
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min, // Centrar verticalmente
-                children: [
-                  // Caja del próximo número
-                  nextNumberDisplay,
-                  SizedBox(height: 20.0),
-                  // Caja de la cuadrícula
-                  Container(
-                    width: gridSizePx,
-                    height: gridSizePx,
-                    padding: EdgeInsets.all(4.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: gridBackGroundColor,
-                    ),
-                    child: Stack(children: stackItems),
-                  ),
-                  SizedBox(height: 20.0),
-                  // Fila con flechas
-                  Container(
-                    width: gridSizePx,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: List.generate(gridSize, (index) {
-                        return GestureDetector(
-                          onTap: () => onColumnTap(index),
-                          child: Container(
-                            width: tileSize,
-                            height: tileSize / 1.5,
-                            color: Colors.transparent,
-                            child: Center(
-                              child: Icon(
-                                //Icons.arrow_downward_rounded,
-                                Icons.keyboard_double_arrow_down_rounded,
-                              ),
-                            ),
+              const Spacer(flex: 7),
+              nextNumberDisplay,
+              const Spacer(flex: 5),
+              Container(
+                width: gridSizePx,
+                height: gridSizePx,
+                padding: EdgeInsets.all(4.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: gridBackGroundColor,
+                ),
+                child: Stack(children: stackItems),
+              ),
+              const Spacer(flex: 4),
+              // Fila con flechas
+              Container(
+                width: gridSizePx,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(gridSize, (index) {
+                    return GestureDetector(
+                      onTap: () => onColumnTap(index),
+                      child: Container(
+                        width: tileSize,
+                        height: tileSize / 1.5,
+                        color: Colors.transparent,
+                        child: Center(
+                          child: Icon(
+                            //Icons.arrow_downward_rounded,
+                            Icons.keyboard_double_arrow_down_rounded,
+                            color: Colors.white,
                           ),
-                        );
-                      }),
-                    ),
-                  ),
-                ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
               ),
-            ),
-          ],
+              const Spacer(flex: 40),
+            ],
+          ),
         ),
       ),
     );

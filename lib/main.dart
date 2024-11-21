@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_2/how_to_play.dart';
 import 'package:practica_2/music_state.dart';
 import 'app_theme.dart';
 import 'home_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: '2048',
             theme: appTheme.currentTheme, // Usa el tema actual
-            home: HomeScreen(), // Pantalla inicial de la app
+            home: HowToPlay(), // Pantalla inicial de la app
           );
         },
       ),
