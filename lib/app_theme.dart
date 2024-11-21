@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 import 'package:flutter/material.dart';
 
@@ -170,11 +172,17 @@ const Map<int, Color> blueGreenTileColors = {
 ThemeData get pinkTheme => ThemeData(
       primarySwatch: Colors.pink,
       scaffoldBackgroundColor: lightPink,
-      textTheme: TextTheme(
-        bodyLarge: TextStyle(color: Colors.pink[900]),
-        bodyMedium: TextStyle(color: Colors.pink[900]),
-        bodySmall: TextStyle(color: Colors.pink[900]),
-      ),
+  textTheme: TextTheme(
+    bodyLarge: GoogleFonts.pangolin(
+      textStyle: TextStyle(color: Colors.pink[900]),
+    ),
+    bodyMedium: GoogleFonts.pangolin(
+      textStyle: TextStyle(color: Colors.pink[900]),
+    ),
+    bodySmall: GoogleFonts.pangolin(
+      textStyle: TextStyle(color: Colors.pink[900]),
+    ),
+  ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,

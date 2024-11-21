@@ -7,6 +7,7 @@ import 'settings.dart';
 import 'package:provider/provider.dart';
 import 'pause_game.dart';
 import 'defeat_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Este es tu archivo donde manejas la música
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: '2048',
             theme: appTheme.currentTheme, // Usa el tema actual
-            home: HowToPlay(), // Pantalla inicial de la app
+            home: HomeScreen(), // Pantalla inicial de la app
           );
         },
       ),
