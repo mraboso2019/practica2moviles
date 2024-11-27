@@ -249,7 +249,7 @@ ThemeData get purpleTheme => ThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.purple[900],
-          textStyle: GoogleFonts.varelaRound(
+          textStyle: GoogleFonts.fredoka(
             // Cambia "lobster" por la fuente que prefieras
             fontSize: 25,
             fontWeight: FontWeight.w500,
