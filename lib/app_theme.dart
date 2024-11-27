@@ -232,15 +232,15 @@ ThemeData get purpleTheme => ThemeData(
       primarySwatch: Colors.deepPurple,
       scaffoldBackgroundColor: lightPurple,
   textTheme: TextTheme(
-    bodyLarge: GoogleFonts.varelaRound(
+    bodyLarge: GoogleFonts.fredoka(
       textStyle: TextStyle(color: Colors.purple[900]),
       fontWeight: FontWeight.w500,
     ),
-    bodyMedium: GoogleFonts.varelaRound(
+    bodyMedium: GoogleFonts.fredoka(
       textStyle: TextStyle(color: Colors.purple[900]),
       fontWeight: FontWeight.w500,
     ),
-    bodySmall: GoogleFonts.varelaRound(
+    bodySmall: GoogleFonts.fredoka(
       textStyle: TextStyle(color: Colors.purple[900]),
       fontWeight: FontWeight.w500,
     ),
