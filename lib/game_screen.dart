@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'tile.dart';
@@ -24,6 +25,7 @@ class _GameScreenState extends State<GameScreen>
   Map<String, double> tilePositions =
       {}; // Guardamos las posiciones de cada tile para animación
   late double tileSize; // Moveremos el cálculo de `tileSize`
+  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -58,6 +60,7 @@ class _GameScreenState extends State<GameScreen>
       bool placed = gameLogic.placeNumberInColumn(column);
       if (placed) {
         moves++;
+        player.play(AssetSource('click.mp3'));
         applyGravity(); // Aplica la gravedad después de colocar la ficha
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -68,7 +71,10 @@ class _GameScreenState extends State<GameScreen>
         Navigator.of(context).push(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                DefeatScreen(score: score, moves: moves,),
+                DefeatScreen(
+              score: score,
+              moves: moves,
+            ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeThroughTransition(
@@ -112,7 +118,6 @@ class _GameScreenState extends State<GameScreen>
     });
   }
 
-
   bool moveAndCombine(List<Tile> line) {
     bool hasChanged = false;
     int targetIndex = 0;
@@ -138,7 +143,6 @@ class _GameScreenState extends State<GameScreen>
     }
     return hasChanged;
   }
-
 
   void applyGravity() {
     for (int col = 0; col < gridSize; col++) {

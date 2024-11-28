@@ -5,12 +5,11 @@ class MusicState extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
 
   bool _isPlayingMusic = false;
-
   bool get isPlayingMusic => _isPlayingMusic;
 
   void startMusic() async {
     if (!_isPlayingMusic) {
-      //await _player.play(AssetSource('background_music.mp3')); // Asegúrate de que el path es correcto
+      await _player.play(AssetSource('background_music.mp3')); // Asegúrate de que el path es correcto
       _player.pause;
       _isPlayingMusic = false;
       notifyListeners();

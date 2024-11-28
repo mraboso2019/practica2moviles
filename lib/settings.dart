@@ -120,7 +120,7 @@ class _SettingsState extends State<Settings> {
                       color: Colors.white,
                     ),
                     child: Text(
-                      'SOUND EFFECS',
+                      'SOUND EFFECTS',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practica_2/game_screen.dart';
 import 'package:practica_2/how_to_play.dart';
 import 'package:practica_2/music_state.dart';
 import 'app_theme.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: '2048',
             theme: appTheme.currentTheme, // Usa el tema actual
-            home: DefeatScreen(score: 500, moves:20), // Pantalla inicial de la app
+            home: HomeScreen(), // Pantalla inicial de la app
           );
         },
       ),
