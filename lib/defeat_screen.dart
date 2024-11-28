@@ -6,8 +6,9 @@ import 'app_theme.dart';
 
 class DefeatScreen extends StatelessWidget {
   final int score;
+  final int moves;
 
-  DefeatScreen({required this.score});
+  DefeatScreen({required this.score, required this.moves});
 
   @override
   Widget build(BuildContext context) {

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: '2048',
             theme: appTheme.currentTheme, // Usa el tema actual
-            home: HomeScreen(), // Pantalla inicial de la app
+            home: DefeatScreen(score: 500, moves:20), // Pantalla inicial de la app
           );
         },
       ),

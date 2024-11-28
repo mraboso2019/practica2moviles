@@ -57,6 +57,7 @@ class _GameScreenState extends State<GameScreen>
     setState(() {
       bool placed = gameLogic.placeNumberInColumn(column);
       if (placed) {
+        moves++;
         applyGravity(); // Aplica la gravedad después de colocar la ficha
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -67,7 +68,7 @@ class _GameScreenState extends State<GameScreen>
         Navigator.of(context).push(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                DefeatScreen(score: score),
+                DefeatScreen(score: score, moves: moves,),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               return FadeThroughTransition(
@@ -84,41 +85,60 @@ class _GameScreenState extends State<GameScreen>
 
   void onSwipe(String direction) {
     setState(() {
+      bool hasChanged = false; // Indicador para detectar cambios en el tablero
+
       if (direction == "left") {
         // Movimiento hacia la izquierda
         for (int i = 0; i < gridSize; i++) {
-          moveAndCombine(gameLogic.tileGrid[i]);
+          if (moveAndCombine(gameLogic.tileGrid[i])) {
+            hasChanged = true;
+          }
         }
       } else if (direction == "right") {
         // Movimiento hacia la derecha
         for (int i = 0; i < gridSize; i++) {
           List<Tile> reversedRow = gameLogic.tileGrid[i].reversed.toList();
-          moveAndCombine(reversedRow);
+          if (moveAndCombine(reversedRow)) {
+            hasChanged = true;
+          }
           gameLogic.tileGrid[i] = reversedRow.reversed.toList();
         }
       }
-      applyGravity(); // Aplicamos gravedad después del swipe
+
+      if (hasChanged) {
+        moves++; // Incrementamos el contador solo si hubo un cambio válido
+        applyGravity(); // Aplicamos gravedad después del swipe
+      }
     });
   }
 
-  void moveAndCombine(List<Tile> line) {
+
+  bool moveAndCombine(List<Tile> line) {
+    bool hasChanged = false;
     int targetIndex = 0;
+
     for (int currentIndex = 0; currentIndex < gridSize; currentIndex++) {
       Tile currentTile = line[currentIndex];
       if (currentTile.value == 0) continue;
 
       if (targetIndex > 0 && line[targetIndex - 1].value == currentTile.value) {
+        // Combinamos fichas
         line[targetIndex - 1].value *= 2;
         currentTile.value = 0;
+        hasChanged = true;
       } else {
         if (targetIndex != currentIndex) {
+          // Movemos la ficha
           line[targetIndex].value = currentTile.value;
           currentTile.value = 0;
+          hasChanged = true;
         }
         targetIndex++;
       }
     }
+    return hasChanged;
   }
+
 
   void applyGravity() {
     for (int col = 0; col < gridSize; col++) {
@@ -152,6 +172,7 @@ class _GameScreenState extends State<GameScreen>
       } while (
           didCombine); // Repetimos mientras se sigan produciendo combinaciones
     }
+    //moves++;
     setState(() {}); // Actualizamos la interfaz para reflejar los cambios
   }
 
