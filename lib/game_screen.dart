@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'app_theme.dart';
 import 'tile.dart';
 import 'game_logic.dart';
@@ -8,6 +9,8 @@ import 'pause_game.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
 import 'app_theme.dart';
+import 'package:soundpool/soundpool.dart';
+import 'music_state.dart';
 
 class GameScreen extends StatefulWidget {
   @override
@@ -26,6 +29,7 @@ class _GameScreenState extends State<GameScreen>
       {}; // Guardamos las posiciones de cada tile para animación
   late double tileSize; // Moveremos el cálculo de `tileSize`
   final player = AudioPlayer();
+  final MusicState musicState = MusicState();
 
   @override
   void initState() {
@@ -60,7 +64,8 @@ class _GameScreenState extends State<GameScreen>
       bool placed = gameLogic.placeNumberInColumn(column);
       if (placed) {
         moves++;
-        player.play(AssetSource('click.mp3'));
+        //player.play(AssetSource('click.mp3'));
+        musicState.soundButton();
         applyGravity(); // Aplica la gravedad después de colocar la ficha
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
