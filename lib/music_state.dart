@@ -10,11 +10,15 @@ class MusicState extends ChangeNotifier {
   bool _isSoundEffects = true;
 
   bool get isPlayingMusic => _isPlayingMusic;
+
   bool get isSoundEffects => _isSoundEffects;
 
   void startMusic() async {
     if (!_isPlayingMusic) {
-      await _player.play(AssetSource('background_music.mp3')); // Asegúrate de que el path es correcto
+      _player.setReleaseMode(ReleaseMode.loop); // Configura el bucle
+      _player.setVolume(0.5);
+      await _player.play(AssetSource(
+          'background_music.mp3')); // Asegúrate de que el path es correcto
       _player.pause;
       _isPlayingMusic = true;
       notifyListeners();
@@ -31,18 +35,38 @@ class MusicState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleSounds() async {
+    _isSoundEffects = !_isSoundEffects;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _player.dispose();
     super.dispose();
   }
 
-  Future<void> soundButton() async {
-    Soundpool pool = Soundpool(streamType: StreamType.notification);
+  Future<void> tapSound() async {
+    if (_isSoundEffects) {
+      Soundpool pool = Soundpool(streamType: StreamType.notification);
 
-    int soundId = await rootBundle.load("assets/click.mp3").then((ByteData soundData) {
-      return pool.load(soundData);
-    });
-    int streamId = await pool.play(soundId);
+      int soundId =
+          await rootBundle.load("assets/click.mp3").then((ByteData soundData) {
+        return pool.load(soundData);
+      });
+      int streamId = await pool.play(soundId);
+    }
+  }
+
+  Future<void> swipeSound() async {
+    if (_isSoundEffects) {
+      Soundpool pool = Soundpool(streamType: StreamType.notification);
+
+      int soundId =
+          await rootBundle.load("assets/swipe.mp3").then((ByteData soundData) {
+        return pool.load(soundData);
+      });
+      int streamId = await pool.play(soundId);
+    }
   }
 }

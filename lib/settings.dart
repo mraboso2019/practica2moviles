@@ -11,7 +11,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  bool isSoundEffects = false;
   final player = AudioPlayer();
 
   @override
@@ -141,7 +140,7 @@ class _SettingsState extends State<Settings> {
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           child: Text(
-                            isSoundEffects ? 'ON' : 'OFF',
+                            musicState.isSoundEffects ? 'ON' : 'OFF',
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
@@ -149,11 +148,9 @@ class _SettingsState extends State<Settings> {
                         Padding(
                           padding: const EdgeInsets.only(right: 16.0),
                           child: Switch(
-                            value: isSoundEffects,
+                            value: musicState.isSoundEffects,
                             onChanged: (value) {
-                              setState(() {
-                                isSoundEffects = value;
-                              });
+                              musicState.toggleSounds();
                             },
                           ),
                         ),

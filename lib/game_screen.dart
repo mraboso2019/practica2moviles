@@ -29,7 +29,8 @@ class _GameScreenState extends State<GameScreen>
       {}; // Guardamos las posiciones de cada tile para animación
   late double tileSize; // Moveremos el cálculo de `tileSize`
   final player = AudioPlayer();
-  final MusicState musicState = MusicState();
+
+  //final MusicState musicState = MusicState();
 
   @override
   void initState() {
@@ -60,12 +61,13 @@ class _GameScreenState extends State<GameScreen>
   }
 
   void onColumnTap(int column) {
+    final musicState = Provider.of<MusicState>(context, listen: false);
     setState(() {
       bool placed = gameLogic.placeNumberInColumn(column);
       if (placed) {
         moves++;
         //player.play(AssetSource('click.mp3'));
-        musicState.soundButton();
+        musicState.tapSound();
         applyGravity(); // Aplica la gravedad después de colocar la ficha
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -95,6 +97,7 @@ class _GameScreenState extends State<GameScreen>
   }
 
   void onSwipe(String direction) {
+    final musicState = Provider.of<MusicState>(context, listen: false);
     setState(() {
       bool hasChanged = false; // Indicador para detectar cambios en el tablero
 
@@ -117,7 +120,9 @@ class _GameScreenState extends State<GameScreen>
       }
 
       if (hasChanged) {
-        moves++; // Incrementamos el contador solo si hubo un cambio válido
+        moves++;
+        musicState
+            .swipeSound(); // Incrementamos el contador solo si hubo un cambio válido
         applyGravity(); // Aplicamos gravedad después del swipe
       }
     });
