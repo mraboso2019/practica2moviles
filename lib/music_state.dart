@@ -11,7 +11,7 @@ class MusicState extends ChangeNotifier {
     if (!_isPlayingMusic) {
       await _player.play(AssetSource('background_music.mp3')); // Asegúrate de que el path es correcto
       _player.pause;
-      _isPlayingMusic = false;
+      _isPlayingMusic = true;
       notifyListeners();
     }
   }
