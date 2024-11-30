@@ -11,6 +11,7 @@ class MusicState extends ChangeNotifier {
   bool _isSoundEffects = true;
 
   bool get isPlayingMusic => _isPlayingMusic;
+
   bool get isSoundEffects => _isSoundEffects;
 
   MusicState() {
@@ -39,15 +40,19 @@ class MusicState extends ChangeNotifier {
     prefs.setBool('isSoundEffects', _isSoundEffects);
   }
 
-  Future<void> startMusic() async {
-    if (!_isPlayingMusic) {
-      _player.setReleaseMode(ReleaseMode.loop); // Configura el bucle
-      _player.setVolume(0.5);
-      await _player.play(AssetSource('background_music.mp3')); // Asegúrate de que el path es correcto
-      _isPlayingMusic = true;
-      await _saveMusicState();  // Guardar el estado de la música
-      notifyListeners();
+  Future<void> startMusicIfNeeded() async {
+    await _loadSettings(); // Asegurarse de que las configuraciones están cargadas
+    if (_isPlayingMusic) {
+      await startMusic(); // Comienza la música si está configurado
     }
+  }
+
+  Future<void> startMusic() async {
+    if (!_isPlayingMusic) return;
+    _player.setReleaseMode(ReleaseMode.loop); // Configura el bucle
+    _player.setVolume(0.5);
+    await _player.play(AssetSource(
+        'background_music.mp3')); // Asegúrate de que el path es correcto
   }
 
   void toggleMusic() async {
@@ -57,13 +62,13 @@ class MusicState extends ChangeNotifier {
       await _player.play(AssetSource('background_music.mp3'));
     }
     _isPlayingMusic = !_isPlayingMusic;
-    await _saveMusicState();  // Guardar el estado de la música
+    await _saveMusicState(); // Guardar el estado de la música
     notifyListeners();
   }
 
   void toggleSounds() async {
     _isSoundEffects = !_isSoundEffects;
-     await _saveSoundEffectsState();  // Guardar el estado de los efectos de sonido  // Guardar el estado de la música
+    await _saveSoundEffectsState(); // Guardar el estado de los efectos de sonido  // Guardar el estado de la música
     notifyListeners();
   }
 

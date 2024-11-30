@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import necesario para SystemChrome
 import 'package:practica_2/music_state.dart';
 import 'app_theme.dart';
 import 'home_screen.dart';
 import 'package:provider/provider.dart';
 
-// Función donde se ejecuta la app
-void main() {
-  runApp(MyApp());
+// Función principal que ejecuta la app
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Bloquear la orientación en modo retrato
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Inicializar el estado de MusicState antes de ejecutar la app
+  final musicState = MusicState();
+  await musicState
+      .startMusicIfNeeded(); // Comienza la música si está habilitada
+
+  runApp(MyApp(musicState: musicState));
 }
 
 class MyApp extends StatelessWidget {
+  final MusicState musicState;
+
+  const MyApp({required this.musicState});
+
   @override
   Widget build(BuildContext context) {
-    // Multiprovider permite proveer varios estados a la aplicación
     return MultiProvider(
       providers: [
-        // Proveedor que gestiona el estado del tema de la app
         ChangeNotifierProvider(create: (_) => AppTheme()),
-        // Proveedor que estiona el estado de la música y efectos de sonido
-        ChangeNotifierProvider(create: (_) => MusicState()),
+        ChangeNotifierProvider<MusicState>.value(value: musicState),
       ],
-      // Consumer escucha los cambios en el estado del tema y reconstruye el widget cuando cambia
       child: Consumer<AppTheme>(
         builder: (context, appTheme, child) {
           return MaterialApp(
-            // Título de la app
             title: 'Merge Down',
-            // Tema de la app
             theme: appTheme.currentTheme,
-            // Pantalla inicial de la app
             home: HomeScreen(),
           );
         },
