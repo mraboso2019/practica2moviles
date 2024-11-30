@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Clase para manejar el estado de la música y efectos de sonido
 class MusicState extends ChangeNotifier {
+  // Reproductor de música principal
   final AudioPlayer _player = AudioPlayer();
 
+  // Indica si la música está activa
   bool _isPlayingMusic = true;
   bool _isSoundEffects = true;
 

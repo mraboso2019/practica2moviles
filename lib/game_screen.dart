@@ -217,9 +217,14 @@ class _GameScreenState extends State<GameScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Calcula el tamaño del tablero en píxeles basado en el ancho de lapantalla
     double gridSizePx = MediaQuery.of(context).size.width - outerPadding * 2;
+    // Espacio entre las fichas
     double tilePadding = 4.0;
+    // Tamaño de cada ficha
     tileSize = ((gridSizePx - (tilePadding * 5) - 28) / 5);
+
+    // Colores de las fichas, color de la fuente y el fondo del tablero según el tema actual
     Map<int, Color> numTileColor = Provider.of<AppTheme>(context).numTileColor;
     Color tileFontColor = Provider.of<AppTheme>(context).tileFontColor;
     Color gridBackGroundColor =
@@ -227,50 +232,66 @@ class _GameScreenState extends State<GameScreen>
     final gradientDecoration =
         Provider.of<AppTheme>(context).gradientBackground;
 
+    // Lista de widgets que representan las fichas y se mostrarán en un Stack
     List<Widget> stackItems = [];
 
-    // Renderizar el tablero de números en 5x5 con animación de caída
+    // Crear las fichas del tablero en una cuadrícula 5x5
     for (int i = 0; i < gridSize; i++) {
       for (int j = 0; j < gridSize; j++) {
+        // Crear las fichas del tablero en una cuadrícula 5x5
         Tile tile = gameLogic.tileGrid[i][j];
-        String key = "$i-$j"; // Clave única para cada tile en la cuadrícula
-        double finalTop = tilePositions[key] ??
-            -tileSize; // Posición inicial (fuera de la cuadrícula)
+        // Clave única para cada tile en la cuadrícula
+        String key = "$i-$j";
+        // Posición inicial (fuera de la cuadrícula)
+        double finalTop = tilePositions[key] ?? -tileSize;
 
         stackItems.add(
+          // Animación para mover las fichas
           AnimatedPositioned(
               // Duración de la animación
               duration: Duration(milliseconds: 300),
               curve: Curves.easeOut,
+              // Posición horizontal
               left: j * (tileSize + tilePadding * 2) + tilePadding,
+              // Posición vertical
               top: i * (tileSize + tilePadding * 2) + tilePadding,
               // Posición actual de la ficha
               width: tileSize,
               height: tileSize,
+              // Detector de gestos
               child: GestureDetector(
+                // Detectar arrastres horizontales
                 onHorizontalDragUpdate: (details) {
+                  // Swipe a la derecha
                   if (details.delta.dx > 0) {
-                    onSwipe("right"); // Swipe a la derecha
-                  } else if (details.delta.dx < 0) {
-                    onSwipe("left"); // Swipe a la izquierda
+                    onSwipe("right");
+                  } // Swipe a la izquierda
+                  else if (details.delta.dx < 0) {
+                    onSwipe("left");
                   }
                 },
+                // Contenedor que representa cada ficha
                 child: Container(
                   width: tileSize - 8,
                   height: tileSize - 8,
                   decoration: BoxDecoration(
+                    // Color basado en el valor de la ficha
                     color: numTileColor[tile.value] ?? Colors.grey,
-                    //color: Colors.grey,
+                    // Color basado en el valor de la ficha
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Center(
                     child: Text(
+                      // Mostrar el valor si es distinto de 0
                       tile.value == 0 ? "" : tile.value.toString(),
+                      // Estilo del texto de la ficha
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: tile.value != null && tile.value! <= 32
+                            // Color para fichas pequeñas
                             ? tileFontColor
+                            // Color para fichas grandes
                             : Colors.white,
                       ),
                     ),
@@ -281,25 +302,33 @@ class _GameScreenState extends State<GameScreen>
       }
     }
 
-    // Mostrar el próximo número en la parte superior
+    // Widget para mostrar el próximo número en la parte superior
     Widget nextNumberDisplay = Stack(
       alignment: Alignment.center,
       children: [
         Center(
+          // Contenedor
           child: Container(
+            // Mismo tamaño del tablero
             width: gridSizePx,
+            // Tamaño de la ficha con un poco de margen
             height: tileSize + tilePadding * 4,
+            // Color blanco y bordes redondeados
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
         ),
+        // Centrado
         Align(
           alignment: Alignment.center,
+          // Muestra la ficha siguiente
           child: Container(
+            // Tamaño de la ficha
             width: tileSize,
             height: tileSize,
+            // Color basado en el siguiente número
             decoration: BoxDecoration(
               color: numTileColor[gameLogic.nextNumber],
               borderRadius: BorderRadius.circular(8.0),
@@ -307,13 +336,16 @@ class _GameScreenState extends State<GameScreen>
             child: Center(
               child: Text(
                 gameLogic.nextNumber?.toString() ?? '',
+                // Estilo del texto de la ficha
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: gameLogic.nextNumber != null &&
                           gameLogic.nextNumber! <= 32
-                      ? tileFontColor // Color si la condición es verdadera
-                      : Colors.white, // Color si la condición es falsa
+                      // Color para números pequeños
+                      ? tileFontColor
+                      // Color para números grandes
+                      : Colors.white,
                 ),
               ),
             ),
@@ -322,6 +354,7 @@ class _GameScreenState extends State<GameScreen>
       ],
     );
 
+    // Widget para mostrar la puntuación
     Widget showScore = Container(
       width: MediaQuery.of(context).size.width / 5,
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
@@ -330,22 +363,28 @@ class _GameScreenState extends State<GameScreen>
         color: Colors.white,
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Ajusta el tamaño al contenido
+        // Ajusta el tamaño al contenido
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             'SCORE',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 15, // Tamaño de letra más pequeño
-              fontWeight: FontWeight.w400, // Peso de fuente más ligero
+              // Tamaño de letra más pequeño
+              fontSize: 15,
+              // Peso de fuente más ligero
+              fontWeight: FontWeight.w400,
             ),
           ),
-          SizedBox(height: 4), // Separación entre los textos
+          // Separación entre los textos
+          SizedBox(height: 4),
           Text(
             '$score',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 20, // Tamaño de letra más grande
+              // Tamaño de letra más grande
+              fontSize: 20,
+              // Peso de la fuente más grande
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -353,6 +392,7 @@ class _GameScreenState extends State<GameScreen>
       ),
     );
 
+    // Widget para mostrar los movimientos
     Widget showMoves = Container(
       width: MediaQuery.of(context).size.width / 5,
       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
@@ -361,22 +401,28 @@ class _GameScreenState extends State<GameScreen>
         color: Colors.white,
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Ajusta el tamaño al contenido
+        // Ajusta el tamaño al contenido
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             'MOVES',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 15, // Tamaño de letra más pequeño
-              fontWeight: FontWeight.w400, // Peso de fuente más ligero
+              // Tamaño de letra más pequeño
+              fontSize: 15,
+              // Peso de fuente más ligero
+              fontWeight: FontWeight.w400,
             ),
           ),
-          SizedBox(height: 4), // Separación entre los textos
+          // Separación entre los textos
+          SizedBox(height: 4),
           Text(
             '$moves',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 20, // Tamaño de letra más grande
+              // Tamaño de letra más grande
+              fontSize: 20,
+              // Peso de la fuente más grande
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -384,8 +430,10 @@ class _GameScreenState extends State<GameScreen>
       ),
     );
 
+    // Botón para abrir el menú de pausa
     Widget options = ElevatedButton(
       onPressed: () {
+        // Navega al menú de pausa
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => PauseGame()),
@@ -394,13 +442,16 @@ class _GameScreenState extends State<GameScreen>
       child: Icon(Icons.menu_rounded),
     );
 
+    // Estructura principal de la interfaz
     return Scaffold(
+      // Fondo con degradado
       body: Container(
         decoration: gradientDecoration,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Espaciador flexible
               const Spacer(flex: 5),
               Container(
                 padding: EdgeInsets.only(
@@ -409,28 +460,38 @@ class _GameScreenState extends State<GameScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(width: outerPadding),
+                    // Botón de menú
                     options,
                     const Spacer(flex: 10),
+                    // Puntuación
                     showScore,
                     const Spacer(flex: 1),
+                    // Número de movimientos
                     showMoves,
                     SizedBox(width: outerPadding),
                   ],
                 ),
               ),
+              // Espacio entre elementos
               const Spacer(flex: 7),
+              // Widget que muestra el próximo número
               nextNumberDisplay,
               const Spacer(flex: 5),
+              // Tablero
               Container(
+                // Tamaño del tablero
                 width: gridSizePx,
                 height: gridSizePx,
                 padding: EdgeInsets.all(4.0),
+                // Color y bordes
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   color: gridBackGroundColor,
                 ),
+                // Fichas
                 child: Stack(children: stackItems),
               ),
+              // Espacio entre elementos
               const Spacer(flex: 4),
               // Fila con flechas
               Container(
@@ -446,7 +507,6 @@ class _GameScreenState extends State<GameScreen>
                         color: Colors.transparent,
                         child: Center(
                           child: Icon(
-                            //Icons.arrow_downward_rounded,
                             Icons.keyboard_double_arrow_down_rounded,
                             color: Colors.white,
                           ),
@@ -456,6 +516,7 @@ class _GameScreenState extends State<GameScreen>
                   }),
                 ),
               ),
+              // Espacio final
               const Spacer(flex: 40),
             ],
           ),

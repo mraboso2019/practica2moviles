@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import necesario para SystemChrome
+import 'package:flutter/services.dart';
 import 'package:practica_2/music_state.dart';
 import 'app_theme.dart';
 import 'home_screen.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:practica_2/how_to_play.dart';
 import 'package:practica_2/settings.dart';
 import 'game_screen.dart';
-import 'package:animations/animations.dart';
 import 'app_theme.dart';
 import 'package:provider/provider.dart';
 
