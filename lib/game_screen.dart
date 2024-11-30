@@ -8,8 +8,6 @@ import 'defeat_screen.dart';
 import 'pause_game.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
-import 'app_theme.dart';
-import 'package:soundpool/soundpool.dart';
 import 'music_state.dart';
 
 class GameScreen extends StatefulWidget {
@@ -19,61 +17,78 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen>
     with SingleTickerProviderStateMixin {
+  // Instancia de la lógica del juego
   late GameLogic gameLogic;
-  int score = 0;
-  int moves = 0;
-  final int gridSize = 5; // Tamaño de la cuadrícula de 5x5
-  final double outerPadding = 16.0; // Margen alrededor de la cuadrícula
-  final double innerMargin = 5.0; // Espacio entre cada casilla
-  Map<String, double> tilePositions =
-      {}; // Guardamos las posiciones de cada tile para animación
-  late double tileSize; // Moveremos el cálculo de `tileSize`
-  final player = AudioPlayer();
 
-  //final MusicState musicState = MusicState();
+  // Puntuación del jugador
+  int score = 0;
+
+  // Número de movimientos realizados
+  int moves = 0;
+
+  // Tamaño de la cuadrícula (5x5)
+  final int gridSize = 5;
+
+  // Margen alrededor de la cuadrícula
+  final double outerPadding = 16.0;
+
+  // Espacio entre cada casilla
+  final double innerMargin = 5.0;
+
+  // Mapa para guardar las posiciones de cada casilla (para animaciones)
+  Map<String, double> tilePositions = {};
+
+  // Tamaño de cada casilla calculado dinámicamente
+  late double tileSize;
 
   @override
   void initState() {
     super.initState();
+    // Inicializamos la lógica del juego
     gameLogic = GameLogic();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Cálculo seguro de `tileSize` en `didChangeDependencies` donde `MediaQuery` está disponible
+    // Calculamos el tamaño de las casillas de manera dinámica según el ancho de la pantalla
     double screenWidth = MediaQuery.of(context).size.width;
     double gridSizePx = screenWidth - 16.0 * 2;
     tileSize = (gridSizePx / 5) - 8;
 
-    //tileSize = (gridSizePx - (innerMargin * (gridSize - 1))) / gridSize;
-
-    initializeTilePositions(); // Inicializar posiciones de los tiles
+    // Inicializamos las posiciones de los tiles (fuera de la cuadrícula)
+    initializeTilePositions();
   }
 
   void initializeTilePositions() {
     // Inicializar posiciones de todos los tiles en sus posiciones originales (fuera de la cuadrícula)
     for (int i = 0; i < gridSize; i++) {
       for (int j = 0; j < gridSize; j++) {
-        tilePositions["$i-$j"] = -tileSize; // Fuera de la cuadrícula
+        // Fuera de la cuadrícula
+        tilePositions["$i-$j"] = -tileSize;
       }
     }
   }
 
+  // Lógica cuando el jugador toca una columna para colocar un número
   void onColumnTap(int column) {
     final musicState = Provider.of<MusicState>(context, listen: false);
     setState(() {
       bool placed = gameLogic.placeNumberInColumn(column);
       if (placed) {
+        // Incrementamos el contador de movimientos
         moves++;
-        //player.play(AssetSource('click.mp3'));
+        // Reproducimos sonido de toque
         musicState.tapSound();
-        applyGravity(); // Aplica la gravedad después de colocar la ficha
+        // Aplica gravedad para ajustar las fichas
+        applyGravity();
       } else {
+        // Si la columna está llena, mostramos un mensaje al jugador
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Full column. Choose another one.")),
         );
       }
+      // Si el juego ha terminado, navegamos a la pantalla de derrota
       if (gameLogic.gameOver) {
         Navigator.of(context).push(
           PageRouteBuilder(
@@ -96,10 +111,12 @@ class _GameScreenState extends State<GameScreen>
     });
   }
 
+  // Lógica para manejar el deslizamiento (swipe) hacia izquierda o derecha
   void onSwipe(String direction) {
     final musicState = Provider.of<MusicState>(context, listen: false);
     setState(() {
-      bool hasChanged = false; // Indicador para detectar cambios en el tablero
+      // Indicador para detectar cambios en el tablero
+      bool hasChanged = false;
 
       if (direction == "left") {
         // Movimiento hacia la izquierda
@@ -120,30 +137,34 @@ class _GameScreenState extends State<GameScreen>
       }
 
       if (hasChanged) {
+        // Incrementamos movimientos si hubo cambios
         moves++;
-        musicState
-            .swipeSound(); // Incrementamos el contador solo si hubo un cambio válido
-        applyGravity(); // Aplicamos gravedad después del swipe
+        // Reproducimos sonido de swipe
+        musicState.swipeSound();
+        // Aplicamos gravedad después del swipe
+        applyGravity();
       }
     });
   }
 
   bool moveAndCombine(List<Tile> line) {
+    // Combina y mueve las fichas en una fila o columna
     bool hasChanged = false;
     int targetIndex = 0;
 
     for (int currentIndex = 0; currentIndex < gridSize; currentIndex++) {
       Tile currentTile = line[currentIndex];
+      // Ignoramos fichas vacías
       if (currentTile.value == 0) continue;
 
       if (targetIndex > 0 && line[targetIndex - 1].value == currentTile.value) {
-        // Combinamos fichas
+        // Si las fichas son iguales, las combinamos
         line[targetIndex - 1].value *= 2;
         currentTile.value = 0;
         hasChanged = true;
       } else {
         if (targetIndex != currentIndex) {
-          // Movemos la ficha
+          // Movemos la ficha si es necesario
           line[targetIndex].value = currentTile.value;
           currentTile.value = 0;
           hasChanged = true;
@@ -154,10 +175,11 @@ class _GameScreenState extends State<GameScreen>
     return hasChanged;
   }
 
+  // Aplica la gravedad
   void applyGravity() {
     for (int col = 0; col < gridSize; col++) {
-      bool
-          didCombine; // Indicador para repetir la columna si se produjo una combinación
+      // Indicador para repetir la columna si se produjo una combinación
+      bool didCombine;
       do {
         didCombine = false;
         for (int row = gridSize - 1; row > 0; row--) {
@@ -172,27 +194,29 @@ class _GameScreenState extends State<GameScreen>
               }
             }
           }
-          // Verificar si podemos combinar
+          // Verificamos si se pueden combinar fichas
           if (row > 0 &&
               gameLogic.tileGrid[row][col].value ==
                   gameLogic.tileGrid[row - 1][col].value &&
               gameLogic.tileGrid[row][col].value != 0) {
+            // Combinamos fichas
             gameLogic.tileGrid[row][col].value *= 2;
+            // Actualizamos la puntuación
             score += gameLogic.tileGrid[row][col].value;
             gameLogic.tileGrid[row - 1][col].value = 0;
-            didCombine = true; // Marcamos que hubo una combinación
+            // Marcamos que hubo una combinación
+            didCombine = true;
           }
         }
-      } while (
-          didCombine); // Repetimos mientras se sigan produciendo combinaciones
+      } // Repetimos mientras se sigan produciendo combinaciones
+      while (didCombine);
     }
-    //moves++;
-    setState(() {}); // Actualizamos la interfaz para reflejar los cambios
+    // Actualizamos la interfaz para reflejar los cambios
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double gridSizePx = MediaQuery.of(context).size.width - outerPadding * 2;
     double tilePadding = 4.0;
     tileSize = ((gridSizePx - (tilePadding * 5) - 28) / 5);

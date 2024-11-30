@@ -1,40 +1,56 @@
-import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:flutter/material.dart';
 
 class AppTheme extends ChangeNotifier {
+  // Guarda el íindice del tema actual
   int _currentThemeIndex = 0;
 
+  // Getter que devuelve el tema del índice actual
   int get currentThemeIndex => _currentThemeIndex;
+
+  // Variable ThemeData que guarda el tema actual
   ThemeData _currentTheme = pinkTheme;
 
+  // Getter que devuelve el tema actual
   ThemeData get currentTheme => _currentTheme;
 
+  // Colores asociados a las celdas del tablero
   Map<int, Color> numTileColor = pinkTileColors;
+
+  // Color del texto de las celdas
   Color tileFontColor = Colors.pink[900]!;
+
+  // Color del fondo del tablero
   Color gridBackGroundColor = softGreyPink;
+
+  // Color de fondo general de la pantalla
   Color backgroundColor = lightPink;
 
+  // Constructor que carga el tema cuando se inicializa la clase
   AppTheme() {
     _loadTheme();
   }
 
+  // Método para cargar el tema guardado en SharedPreferences
   void _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
+    // Si no hay tema guardado, se usa 0
     _currentThemeIndex =
         prefs.getInt('currentThemeIndex') ?? 0; // 0 es el valor por defecto
+    // Aplica el tema según el índice guardado
     _applyTheme(_currentThemeIndex);
-    print(_currentTheme);
   }
 
+  // Método para guardar el tema en SharedPreferences
   void _saveTheme(int themeIndex) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('currentThemeIndex', themeIndex);
   }
 
+  // Método para aplicar el tema según el índice dado
   void _applyTheme(int themeIndex) {
+    // Aplica el tema correspondiente dependiendo del índice
     switch (themeIndex) {
       case 0:
         setPinkTheme();
@@ -45,13 +61,15 @@ class AppTheme extends ChangeNotifier {
       case 2:
         setPurpleTheme();
         break;
+      // Si el índice no es válido, se aplica el tema rosa
       default:
         setPinkTheme(); // Tema por defecto
     }
+    // Notifica a los listeners (widgets que usan este tema) para que se actualicen
     notifyListeners();
-    print(_currentTheme);
   }
 
+  // Configura los colores y el estilo del tema rosa
   void setPinkTheme() {
     _currentTheme = pinkTheme;
     tileFontColor = Colors.pink[900]!;
@@ -60,6 +78,7 @@ class AppTheme extends ChangeNotifier {
     backgroundColor = lightPink;
   }
 
+  // Configura los colores y el estilo del tema morado
   void setPurpleTheme() {
     _currentTheme = purpleTheme;
     tileFontColor = Colors.white;
@@ -68,6 +87,7 @@ class AppTheme extends ChangeNotifier {
     backgroundColor = lightPurple;
   }
 
+  // Configura los colores y el estilo del tema azul
   void setBlueTheme() {
     _currentTheme = blueTheme;
     tileFontColor = Colors.blue[900]!;
@@ -76,15 +96,18 @@ class AppTheme extends ChangeNotifier {
     backgroundColor = lightBlueGreen;
   }
 
+  // Método para cambiar el tema y actualizar SharedPreferences
   void changeTheme(int themeIndex) async {
+    // Guardar el índice del tema
     _currentThemeIndex = themeIndex;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('currentThemeIndex', themeIndex); // Guardar el índice del tema
+    prefs.setInt('currentThemeIndex', themeIndex);
 
     _applyTheme(_currentThemeIndex);
     _saveTheme(_currentThemeIndex);
   }
 
+  // Devuelve un fondo con un gradiente basado en los colores del tema actual
   BoxDecoration get gradientBackground => BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -98,6 +121,7 @@ class AppTheme extends ChangeNotifier {
       );
 }
 
+// Definición de colores para los temas (rosas, morados, azules, etc.)
 const Color lightPink = Color.fromARGB(255, 255, 182, 193);
 const Color darkPink = Color.fromARGB(255, 255, 105, 180);
 const Color palePink = Color.fromARGB(255, 255, 228, 225);
@@ -116,6 +140,7 @@ const Color darkBlueGreen = Color.fromARGB(255, 60, 170, 200);
 const Color softGreyBlue = Color.fromARGB(255, 94, 114, 156);
 const Color deepBlueGreen = Color.fromARGB(255, 30, 100, 150);
 
+// Mapas de colores para las celdas del tablero (tiles) según el tema
 const Map<int, Color> pinkTileColors = {
   0: Colors.white,
   //2: Color.fromARGB(255, 255, 192, 203),
@@ -168,30 +193,40 @@ const Map<int, Color> blueGreenTileColors = {
   8192: Color.fromARGB(255, 0, 30, 80),
 };
 
+// Tema Rosa
 ThemeData get pinkTheme => ThemeData(
+      // Color principal del tema
       primarySwatch: Colors.pink,
+      // Color de fondo principal de la pantalla
       scaffoldBackgroundColor: lightPink,
+
+      // Configuración de los estilos de texto
       textTheme: TextTheme(
+        // Estilo para textos grandes
         bodyLarge: GoogleFonts.fredoka(
           textStyle: TextStyle(color: Colors.pink[900]),
           fontWeight: FontWeight.w500,
         ),
+        // Estilo para textos medianos
         bodyMedium: GoogleFonts.fredoka(
           textStyle: TextStyle(color: Colors.pink[900]),
           fontWeight: FontWeight.w500,
         ),
+        // Estilo para textos pequeños
         bodySmall: GoogleFonts.fredoka(
           textStyle: TextStyle(color: Colors.pink[900]),
           fontWeight: FontWeight.w500,
         ),
       ),
+      // Estilo de los botones elevados
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          // Color de fondo del botón
           backgroundColor: Colors.white,
+          // Color del texto en el botón
           foregroundColor: Colors.pink[900],
-          //textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+          // Estilo del texto
           textStyle: GoogleFonts.fredoka(
-            // Cambia "lobster" por la fuente que prefieras
             fontSize: 25,
             fontWeight: FontWeight.w500,
           ),
@@ -200,57 +235,66 @@ ThemeData get pinkTheme => ThemeData(
           ),
         ),
       ),
+      // Estilo de los iconos
       iconTheme: IconThemeData(
         color: Colors.pink[900],
         size: 36,
       ),
+      // Estilo de los checkboxes
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith((states) {
           if (states.contains(MaterialState.selected)) {
+            // Color cuando está seleccionado
             return softGreyPink;
           }
-          return Colors.white; // Color cuando no está seleccionado
+          // Color cuando no está seleccionado
+          return Colors.white;
         }),
       ),
+      // Estilo de los interruptores (switches)
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.selected)) {
+            // Color cuando está seleccionado
             return Colors.white;
           }
+          // Color cuando no está seleccionado
           return Colors.grey[700];
         }),
         trackColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.selected)) {
+            // Color de la pista seleccionada
             return softGreyPink;
           }
+          // Color de la pista no seleccionada
           return Colors.grey[300];
         }),
       ),
     );
 
+// Tema Morado
 ThemeData get purpleTheme => ThemeData(
       primarySwatch: Colors.deepPurple,
       scaffoldBackgroundColor: lightPurple,
-  textTheme: TextTheme(
-    bodyLarge: GoogleFonts.fredoka(
-      textStyle: TextStyle(color: Colors.purple[900]),
-      fontWeight: FontWeight.w500,
-    ),
-    bodyMedium: GoogleFonts.fredoka(
-      textStyle: TextStyle(color: Colors.purple[900]),
-      fontWeight: FontWeight.w500,
-    ),
-    bodySmall: GoogleFonts.fredoka(
-      textStyle: TextStyle(color: Colors.purple[900]),
-      fontWeight: FontWeight.w500,
-    ),
-  ),
+      textTheme: TextTheme(
+        bodyLarge: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.purple[900]),
+          fontWeight: FontWeight.w500,
+        ),
+        bodyMedium: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.purple[900]),
+          fontWeight: FontWeight.w500,
+        ),
+        bodySmall: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.purple[900]),
+          fontWeight: FontWeight.w500,
+        ),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.purple[900],
           textStyle: GoogleFonts.fredoka(
-            // Cambia "lobster" por la fuente que prefieras
             fontSize: 25,
             fontWeight: FontWeight.w500,
           ),
@@ -268,7 +312,7 @@ ThemeData get purpleTheme => ThemeData(
           if (states.contains(MaterialState.selected)) {
             return softGreyPurple;
           }
-          return Colors.white; // Color cuando no está seleccionado
+          return Colors.white;
         }),
       ),
       switchTheme: SwitchThemeData(
@@ -287,29 +331,29 @@ ThemeData get purpleTheme => ThemeData(
       ),
     );
 
+// Tema Azul
 ThemeData get blueTheme => ThemeData(
       primarySwatch: Colors.lightBlue,
       scaffoldBackgroundColor: lightBlueGreen,
-  textTheme: TextTheme(
-    bodyLarge: GoogleFonts.fredoka(
-      textStyle: TextStyle(color: Colors.blue[900]),
-      fontWeight: FontWeight.w500,
-    ),
-    bodyMedium: GoogleFonts.fredoka(
-      textStyle: TextStyle(color: Colors.blue[900]),
-      fontWeight: FontWeight.w500,
-    ),
-    bodySmall: GoogleFonts.fredoka(
-      textStyle: TextStyle(color: Colors.blue[900]),
-      fontWeight: FontWeight.w500,
-    ),
-  ),
+      textTheme: TextTheme(
+        bodyLarge: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.blue[900]),
+          fontWeight: FontWeight.w500,
+        ),
+        bodyMedium: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.blue[900]),
+          fontWeight: FontWeight.w500,
+        ),
+        bodySmall: GoogleFonts.fredoka(
+          textStyle: TextStyle(color: Colors.blue[900]),
+          fontWeight: FontWeight.w500,
+        ),
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.blue[900],
           textStyle: GoogleFonts.fredoka(
-            // Cambia "lobster" por la fuente que prefieras
             fontSize: 25,
             fontWeight: FontWeight.w500,
           ),
@@ -327,7 +371,7 @@ ThemeData get blueTheme => ThemeData(
           if (states.contains(MaterialState.selected)) {
             return softGreyBlue;
           }
-          return Colors.white; // Color cuando no está seleccionado
+          return Colors.white;
         }),
       ),
       switchTheme: SwitchThemeData(

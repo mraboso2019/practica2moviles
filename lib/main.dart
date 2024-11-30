@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:practica_2/game_screen.dart';
-import 'package:practica_2/how_to_play.dart';
 import 'package:practica_2/music_state.dart';
 import 'app_theme.dart';
 import 'home_screen.dart';
-import 'settings.dart';
 import 'package:provider/provider.dart';
-import 'pause_game.dart';
-import 'defeat_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+// Función donde se ejecuta la app
 void main() {
   runApp(MyApp());
 }
@@ -17,17 +12,24 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Multiprovider permite proveer varios estados a la aplicación
     return MultiProvider(
       providers: [
+        // Proveedor que gestiona el estado del tema de la app
         ChangeNotifierProvider(create: (_) => AppTheme()),
-        ChangeNotifierProvider(create: (_) => MusicState()), // Aquí creas el MusicState
+        // Proveedor que estiona el estado de la música y efectos de sonido
+        ChangeNotifierProvider(create: (_) => MusicState()),
       ],
+      // Consumer escucha los cambios en el estado del tema y reconstruye el widget cuando cambia
       child: Consumer<AppTheme>(
         builder: (context, appTheme, child) {
           return MaterialApp(
-            title: '2048',
-            theme: appTheme.currentTheme, // Usa el tema actual
-            home: HomeScreen(), // Pantalla inicial de la app
+            // Título de la app
+            title: 'Merge Down',
+            // Tema de la app
+            theme: appTheme.currentTheme,
+            // Pantalla inicial de la app
+            home: HomeScreen(),
           );
         },
       ),
