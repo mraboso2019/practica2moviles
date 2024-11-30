@@ -30,9 +30,33 @@ class PauseGame extends StatelessWidget {
               const Spacer(flex: 1),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GameScreen()),
+                  // Mostrar la alerta al usuario
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Confirm New Game'), // Título de la alerta
+                        content: Text('Are you sure you want to start a new game?'), // Mensaje
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context); // Cierra el diálogo sin hacer nada
+                            },
+                            child: Text('CANCEL'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context); // Cierra el diálogo
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => GameScreen()), // Navega a la pantalla de juego
+                              );
+                            },
+                            child: Text('START'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
                 child: Text('NEW GAME'),
