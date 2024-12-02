@@ -2,8 +2,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
+// Clase para gestionar el cambio de temas
 class AppTheme extends ChangeNotifier {
-  // Guarda el íindice del tema actual
+  // Guarda el índice del tema actual
   int _currentThemeIndex = 0;
 
   // Getter que devuelve el tema del índice actual
@@ -37,7 +38,7 @@ class AppTheme extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     // Si no hay tema guardado, se usa 0
     _currentThemeIndex =
-        prefs.getInt('currentThemeIndex') ?? 0; // 0 es el valor por defecto
+        prefs.getInt('currentThemeIndex') ?? 0;
     // Aplica el tema según el índice guardado
     _applyTheme(_currentThemeIndex);
   }
@@ -98,7 +99,7 @@ class AppTheme extends ChangeNotifier {
 
   // Método para cambiar el tema y actualizar SharedPreferences
   void changeTheme(int themeIndex) async {
-    // Guardar el índice del tema
+    // Guarda el índice del tema
     _currentThemeIndex = themeIndex;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('currentThemeIndex', themeIndex);
